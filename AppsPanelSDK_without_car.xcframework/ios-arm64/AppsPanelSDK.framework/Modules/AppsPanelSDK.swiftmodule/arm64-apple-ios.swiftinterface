@@ -1,0 +1,707 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AppsPanelSDK
+import Alamofire
+@_exported import AppsPanelSDK
+import CommonCrypto
+import CoreServices
+import CoreTelephony
+import Dispatch
+import Foundation
+import KeychainAccess
+import Swift
+import SwiftJWT
+import UIKit
+import UserNotifications
+import WebKit
+import _Concurrency
+public struct AnyDecodable : Swift.Decodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyDecodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AppsPanelSDK.AnyDecodable : AppsPanelSDK._AnyDecodable {
+}
+extension AppsPanelSDK._AnyDecodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+extension AppsPanelSDK.AnyDecodable : Swift.Equatable {
+  public static func == (lhs: AppsPanelSDK.AnyDecodable, rhs: AppsPanelSDK.AnyDecodable) -> Swift.Bool
+}
+extension AppsPanelSDK.AnyDecodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AppsPanelSDK.AnyDecodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class PushNotificationManager {
+  public static let shared: AppsPanelSDK.PushNotificationManager
+  public func registerDevice(token: Foundation.Data)
+  @available(iOS 10.0, *)
+  public func registerForPushNotifications(application: UIKit.UIApplication)
+  public func checkReceivedNotification(launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]?, state: UIKit.UIApplication.State)
+  @available(iOS 10.0, *)
+  public func manageNotification(_ notification: UserNotifications.UNNotification, show: Swift.Bool, state: UIKit.UIApplication.State, completionHandler: @escaping ((UserNotifications.UNNotificationPresentationOptions) -> Swift.Void))
+  public func sendStatistic(notification: AppsPanelSDK.PushNotificationUserInfo)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class AppsPanel {
+  public static let shared: AppsPanelSDK.AppsPanel
+  weak public var delegate: AppsPanelSDK.AppsPanelDelegate?
+  public var deviceIdentifier: Swift.String {
+    get
+  }
+  public var usesLegacyDeviceIdentifier: Swift.Bool {
+    get
+    set
+  }
+  public var configuration: AppsPanelSDK.AppsPanel.Configuration {
+    get
+  }
+  public var remoteConfiguration: AppsPanelSDK.RemoteConfiguration? {
+    get
+  }
+  public func configure(withAppName appName: Swift.String, appKey: Swift.String, privateKey: Swift.String, baseURL: Foundation.URL? = nil, sdkBaseURL: Foundation.URL? = nil, appGroupIdentifier: Swift.String? = nil) throws
+  public func startSession() throws
+  @objc deinit
+}
+public protocol AppsPanelDelegate : AnyObject {
+  func appsPanel(_ appsPanel: AppsPanelSDK.AppsPanel, didReceiveRemoteConfiguration remoteConfiguration: AppsPanelSDK.RemoteConfiguration)
+}
+extension AppsPanelSDK.AppsPanelDelegate {
+  public func appsPanel(_ appsPanel: AppsPanelSDK.AppsPanel, didReceiveRemoteConfiguration remoteConfiguration: AppsPanelSDK.RemoteConfiguration)
+}
+@_hasMissingDesignatedInitializers public class DocumentHelper {
+  public static func getPathFor(filename: Swift.String) -> Swift.String
+  public static func write(value: Any, forKey key: Swift.String)
+  public static func write(value: Any, key: Swift.String, plistName: Swift.String)
+  public static func readValue(forKey key: Swift.String) -> Any?
+  public static func readValueForKey(_ key: Swift.String, plistName: Swift.String) -> Any?
+  @objc deinit
+}
+public struct FileUpload : AppsPanelSDK.Upload {
+  public let file: AppsPanelSDK.File
+  public let entity: AppsPanelSDK.UploadEntity?
+  public var parameters: [Swift.String : Swift.String]
+  public var headers: AppsPanelSDK.Headers
+  public init(file: AppsPanelSDK.File, entity: AppsPanelSDK.UploadEntity? = nil)
+  public init(data: Foundation.Data, entity: AppsPanelSDK.UploadEntity? = nil)
+}
+public struct ImageUploadResponse : AppsPanelSDK.Response {
+  public let uploadedImage: AppsPanelSDK.UploadedImage
+  public let data: Foundation.Data
+  public let statusCode: Swift.Int
+  public let request: Foundation.URLRequest
+  public let response: Foundation.HTTPURLResponse
+}
+public struct UploadedImage : Swift.Codable {
+  public let originalURL: Foundation.URL
+  public let smallURL: Foundation.URL
+  public let mediumURL: Foundation.URL
+  public let largeURL: Foundation.URL
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct TextCollection : Swift.Codable {
+  public typealias Key = Swift.String
+  public typealias LocalizedTexts = [AppsPanelSDK.TextCollection.Key : Swift.String]
+  public let language: Swift.String
+  public let askedLanguage: Swift.String
+  @available(*, deprecated, message: "Use language property instead")
+  public var locale: Foundation.Locale {
+    get
+  }
+  @available(*, deprecated, message: "Use askedLanguage property instead")
+  public var askedLocale: Foundation.Locale {
+    get
+  }
+  public let texts: AppsPanelSDK.TextCollection.LocalizedTexts
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  public subscript(key: Swift.String) -> Swift.String? {
+    get
+  }
+}
+public struct RemoteConfiguration : Swift.Decodable {
+  public let appName: Swift.String
+  public let timeout: Foundation.TimeInterval
+  public let deviceInfoConfiguration: AppsPanelSDK.RemoteConfiguration.DeviceInfoConfiguration
+  public let textManagerConfiguration: AppsPanelSDK.RemoteConfiguration.TextManagerConfiguration
+  public let pushNotificationConfiguration: AppsPanelSDK.RemoteConfiguration.PushNotificationConfiguration
+  public let statConfiguration: AppsPanelSDK.RemoteConfiguration.StatConfiguration
+  public let logConfiguration: AppsPanelSDK.RemoteConfiguration.LogConfiguration?
+  public let dialogConfiguration: AppsPanelSDK.RemoteConfiguration.DialogConfiguration?
+  public let interstitialConfiguration: AppsPanelSDK.RemoteConfiguration.InterstitialConfiguration?
+  public var applicationParameters: [Swift.String : Any]? {
+    get
+  }
+  public init(from decoder: Swift.Decoder) throws
+}
+extension AppsPanelSDK.RemoteConfiguration {
+  public struct DeviceInfoConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public struct PushNotificationConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public let delay: Swift.Int
+    public let auto: Swift.Bool
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public struct StatConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public struct LogConfiguration : Swift.Codable {
+    public struct ContextConfiguration : Swift.Codable {
+      public let isEnabled: Swift.Bool
+      public let consoleEnabled: Swift.Bool
+      public let streamEnabled: Swift.Bool
+      public let level: Swift.String
+      public func encode(to encoder: Swift.Encoder) throws
+      public init(from decoder: Swift.Decoder) throws
+    }
+    public let isEnabled: Swift.Bool
+    public let app: AppsPanelSDK.RemoteConfiguration.LogConfiguration.ContextConfiguration
+    public let sdk: AppsPanelSDK.RemoteConfiguration.LogConfiguration.ContextConfiguration
+    public let ws: AppsPanelSDK.RemoteConfiguration.LogConfiguration.ContextConfiguration
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public struct DialogConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public let delay: Swift.Int
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public struct InterstitialConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public let auto: Swift.Bool
+    public let delay: Swift.Int
+    public let displayLimit: Foundation.TimeInterval
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public struct TextManagerConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+}
+public protocol Cancellable {
+  var isCancelled: Swift.Bool { get }
+  func cancel()
+}
+public struct Security {
+  public var options: AppsPanelSDK.Security.Options {
+    get
+  }
+  public var usesUserToken: Swift.Bool {
+    get
+  }
+  public var secureData: Foundation.Data? {
+    get
+  }
+}
+extension AppsPanelSDK.Security {
+  public struct Options : Swift.OptionSet {
+    public typealias RawValue = Swift.Int
+    public let rawValue: AppsPanelSDK.Security.Options.RawValue
+    public static let none: AppsPanelSDK.Security.Options
+    public static let jsonWebToken: AppsPanelSDK.Security.Options
+    public static let encryptAll: AppsPanelSDK.Security.Options
+    public static let all: AppsPanelSDK.Security.Options
+    public init(rawValue: AppsPanelSDK.Security.Options.RawValue)
+    public typealias ArrayLiteralElement = AppsPanelSDK.Security.Options
+    public typealias Element = AppsPanelSDK.Security.Options
+  }
+}
+extension AppsPanelSDK.Stats {
+  public typealias Context = [Swift.String : AppsPanelSDK.AnyCodable]
+}
+public struct PushNotificationUserInfo : Swift.Codable {
+  public enum Sender : Swift.String, Swift.Codable {
+    case apnl
+    case other
+    public init(from decoder: Swift.Decoder) throws
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init(from request: UserNotifications.UNNotificationRequest) throws
+  public init(from userInfo: [Swift.String : Any]) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+extension AppsPanelSDK.PushNotificationUserInfo {
+  public func extractAttachment() -> UserNotifications.UNNotificationAttachment?
+}
+extension AppsPanelSDK.AppsPanel {
+  public struct Configuration {
+    public let appName: Swift.String
+    public let appKey: Swift.String
+    public let privateKey: Swift.String
+    public let baseURL: Foundation.URL
+    public let sdkBaseURL: Foundation.URL
+    public let appGroupIdentifier: Swift.String?
+  }
+}
+public struct FileUploadResponse : AppsPanelSDK.Response {
+  public let uploadedFile: AppsPanelSDK.UploadedFile
+  public let data: Foundation.Data
+  public let statusCode: Swift.Int
+  public let request: Foundation.URLRequest
+  public let response: Foundation.HTTPURLResponse
+}
+public struct UploadedFile : Swift.Codable {
+  public let url: Foundation.URL
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ImageUpload : AppsPanelSDK.Upload {
+  public let file: AppsPanelSDK.File
+  public let entity: AppsPanelSDK.UploadEntity?
+  public let options: AppsPanelSDK.ImageUpload.Options?
+  public var parameters: [Swift.String : Swift.String]
+  public var headers: AppsPanelSDK.Headers
+  public init(file: AppsPanelSDK.File, entity: AppsPanelSDK.UploadEntity? = nil, options: AppsPanelSDK.ImageUpload.Options? = nil)
+  public init(data: Foundation.Data, entity: AppsPanelSDK.UploadEntity? = nil, options: AppsPanelSDK.ImageUpload.Options? = nil)
+}
+extension AppsPanelSDK.ImageUpload {
+  public struct Size : Swift.CustomStringConvertible, Swift.LosslessStringConvertible {
+    public let width: Swift.Int
+    public let height: Swift.Int
+    public init(width: Swift.Int, height: Swift.Int)
+    public var description: Swift.String {
+      get
+    }
+    public init?(_ description: Swift.String)
+  }
+}
+extension AppsPanelSDK.ImageUpload {
+  public struct Options {
+    public let smallSize: AppsPanelSDK.ImageUpload.Size?
+    public let mediumSize: AppsPanelSDK.ImageUpload.Size?
+    public let largeSize: AppsPanelSDK.ImageUpload.Size?
+    public init(smallSize: AppsPanelSDK.ImageUpload.Size? = nil, mediumSize: AppsPanelSDK.ImageUpload.Size? = nil, largeSize: AppsPanelSDK.ImageUpload.Size? = nil)
+  }
+}
+public typealias DownloadProgressHandler = (Foundation.Progress) -> Swift.Void
+public typealias DataCompletionHandler = (Swift.Result<AppsPanelSDK.DataResponse, AppsPanelSDK.RequestError>) -> Swift.Void
+public typealias ObjectCompletionHandler<T> = (Swift.Result<AppsPanelSDK.ObjectResponse<T>, AppsPanelSDK.RequestError>) -> Swift.Void where T : Swift.Decodable
+public typealias FileUploadCompletionHandler = (Swift.Result<AppsPanelSDK.FileUploadResponse, AppsPanelSDK.RequestError>) -> Swift.Void
+public typealias ImageUploadCompletionHandler = (Swift.Result<AppsPanelSDK.ImageUploadResponse, AppsPanelSDK.RequestError>) -> Swift.Void
+@_hasMissingDesignatedInitializers public class DataRequest {
+  final public let requestManager: AppsPanelSDK.RequestManager
+  public var urlRequest: Foundation.URLRequest {
+    get
+  }
+  public var task: Foundation.URLSessionTask? {
+    get
+  }
+  public var body: Foundation.Data? {
+    get
+  }
+  public var security: AppsPanelSDK.Security
+  public var timeout: Foundation.TimeInterval?
+  public var downloadProgress: AppsPanelSDK.DownloadProgressHandler?
+  public var error: AppsPanelSDK.RequestError.Cause?
+  @discardableResult
+  public func setBody<T>(_ object: T, jsonEncoder: Foundation.JSONEncoder = JSONEncoder()) -> AppsPanelSDK.DataRequest where T : Swift.Encodable
+  @discardableResult
+  public func setBody(_ array: [Swift.String : Any]) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func setBody(_ dictionary: [[Swift.String : Any]]) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func setBody(with formData: AppsPanelSDK.FormData) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func setHeaders(_ headers: AppsPanelSDK.Headers) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func secure(withOptions options: AppsPanelSDK.Security.Options) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func secureData<T>(_ object: T, jsonEncoder: Foundation.JSONEncoder = JSONEncoder()) -> AppsPanelSDK.DataRequest where T : Swift.Encodable
+  @discardableResult
+  public func secureData(_ array: [Swift.String : Any]) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func secureData(_ dictionary: [[Swift.String : Any]]) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func useUserToken() -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func setTimeout(_ timeout: Foundation.TimeInterval) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func downloadProgress(_ progressHandler: @escaping AppsPanelSDK.DownloadProgressHandler) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func responseData(_ completion: @escaping AppsPanelSDK.DataCompletionHandler) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func responseObject<T>(_ type: T.Type, jsonDecoder: Foundation.JSONDecoder = JSONDecoder(), completion: @escaping AppsPanelSDK.ObjectCompletionHandler<T>) -> AppsPanelSDK.DataRequest where T : Swift.Decodable
+  public func cancel()
+  public func resume()
+  public func suspend()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class DeviceInfoManager {
+  public static let shared: AppsPanelSDK.DeviceInfoManager
+  @objc deinit
+}
+public struct RequestError : Swift.Error {
+  public let request: Foundation.URLRequest?
+  public let response: Foundation.HTTPURLResponse?
+  public let statusCode: Swift.Int?
+  public let data: Foundation.Data?
+  public let cause: AppsPanelSDK.RequestError.Cause
+  public let backendInfo: AppsPanelSDK.BackendErrorInfo?
+  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, cause: AppsPanelSDK.RequestError.Cause)
+}
+extension AppsPanelSDK.RequestError {
+  public enum Cause : Swift.Error {
+    case network(error: Swift.Error)
+    case invalidURL
+    case encodingFailed(context: AppsPanelSDK.RequestError.Cause.EncodingContext, error: Swift.Error)
+    case decodingFailed(error: Swift.Error)
+    case badStatusCode(Swift.Int)
+    case missingAuthenticationToken
+    case jsonWebTokenCreationFailed(error: Swift.Error)
+    case encryptionFailed(error: Swift.Error)
+    case decryptionFailed(error: AppsPanelSDK.DecryptionError)
+    case unknown
+    public enum EncodingContext {
+      case queryString
+      case body
+      case secureData
+      case multipart
+      public static func == (a: AppsPanelSDK.RequestError.Cause.EncodingContext, b: AppsPanelSDK.RequestError.Cause.EncodingContext) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+  }
+}
+public enum DecryptionError : Swift.Error {
+  case missingSecretHeader
+  case invalidData
+  case decryptionFailed(error: Swift.Error)
+}
+extension AppsPanelSDK.RequestError {
+  public func isURLError(with code: Foundation.URLError.Code) -> Swift.Bool
+  public var isNoConnectionError: Swift.Bool {
+    get
+  }
+  public var isTimedOutError: Swift.Bool {
+    get
+  }
+  public var isNoConnectionOrTimedOutError: Swift.Bool {
+    get
+  }
+  public var isCancelledError: Swift.Bool {
+    get
+  }
+}
+public struct BackendErrorInfo : Swift.Codable {
+  public let code: Swift.Int
+  public let key: Swift.String
+  public let message: Swift.String
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct AnyEncodable : Swift.Encodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyEncodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AppsPanelSDK.AnyEncodable : AppsPanelSDK._AnyEncodable {
+}
+extension AppsPanelSDK._AnyEncodable {
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension AppsPanelSDK.AnyEncodable : Swift.Equatable {
+  public static func == (lhs: AppsPanelSDK.AnyEncodable, rhs: AppsPanelSDK.AnyEncodable) -> Swift.Bool
+}
+extension AppsPanelSDK.AnyEncodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AppsPanelSDK.AnyEncodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AppsPanelSDK.AnyEncodable : Swift.ExpressibleByNilLiteral {
+}
+extension AppsPanelSDK.AnyEncodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AppsPanelSDK.AnyEncodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AppsPanelSDK.AnyEncodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AppsPanelSDK.AnyEncodable : Swift.ExpressibleByStringLiteral {
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias StringLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AppsPanelSDK.AnyEncodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AppsPanelSDK.AnyEncodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+extension AppsPanelSDK._AnyEncodable {
+  public init(nilLiteral _: ())
+  public init(booleanLiteral value: Swift.Bool)
+  public init(integerLiteral value: Swift.Int)
+  public init(floatLiteral value: Swift.Double)
+  public init(extendedGraphemeClusterLiteral value: Swift.String)
+  public init(stringLiteral value: Swift.String)
+  public init(arrayLiteral elements: Any...)
+  public init(dictionaryLiteral elements: (Swift.AnyHashable, Any)...)
+}
+public protocol Response {
+  var data: Foundation.Data { get }
+  var statusCode: Swift.Int { get }
+  var request: Foundation.URLRequest { get }
+  var response: Foundation.HTTPURLResponse { get }
+}
+public struct DataResponse : AppsPanelSDK.Response {
+  public let data: Foundation.Data
+  public let statusCode: Swift.Int
+  public let request: Foundation.URLRequest
+  public let response: Foundation.HTTPURLResponse
+}
+public struct ObjectResponse<T> : AppsPanelSDK.Response where T : Swift.Decodable {
+  public let object: T
+  public let data: Foundation.Data
+  public let statusCode: Swift.Int
+  public let request: Foundation.URLRequest
+  public let response: Foundation.HTTPURLResponse
+}
+@_hasMissingDesignatedInitializers public class InterstitialManager {
+  public static let shared: AppsPanelSDK.InterstitialManager
+  public func presentInterstitial(from viewController: UIKit.UIViewController)
+  @objc deinit
+}
+public struct AnyCodable : Swift.Codable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+extension AppsPanelSDK.AnyCodable : AppsPanelSDK._AnyEncodable, AppsPanelSDK._AnyDecodable {
+}
+extension AppsPanelSDK.AnyCodable : Swift.Equatable {
+  public static func == (lhs: AppsPanelSDK.AnyCodable, rhs: AppsPanelSDK.AnyCodable) -> Swift.Bool
+}
+extension AppsPanelSDK.AnyCodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AppsPanelSDK.AnyCodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AppsPanelSDK.AnyCodable : Swift.ExpressibleByNilLiteral {
+}
+extension AppsPanelSDK.AnyCodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AppsPanelSDK.AnyCodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AppsPanelSDK.AnyCodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AppsPanelSDK.AnyCodable : Swift.ExpressibleByStringLiteral {
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias StringLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AppsPanelSDK.AnyCodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AppsPanelSDK.AnyCodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+public struct UploadEntity {
+  public let name: Swift.String
+  public let id: Swift.String?
+  public init(name: Swift.String, id: Swift.String? = nil)
+}
+public struct File {
+  public let data: Foundation.Data
+  public let mimeType: Swift.String
+  public let fileName: Swift.String
+  public init(data: Foundation.Data, mimeType: Swift.String? = nil, fileName: Swift.String? = nil)
+}
+public protocol Endpoint {
+  var path: Swift.String { get }
+  var httpMethod: AppsPanelSDK.HTTPMethod { get }
+  var parameters: AppsPanelSDK.Parameters? { get }
+  var body: AppsPanelSDK.Parameters? { get }
+  var headers: AppsPanelSDK.Headers? { get }
+  var secureData: Foundation.Data? { get }
+  var securityOptions: AppsPanelSDK.Security.Options { get }
+}
+extension AppsPanelSDK.Endpoint {
+  public var parameters: AppsPanelSDK.Parameters? {
+    get
+  }
+  public var body: AppsPanelSDK.Parameters? {
+    get
+  }
+  public var headers: AppsPanelSDK.Headers? {
+    get
+  }
+  public var secureData: Foundation.Data? {
+    get
+  }
+  public var securityOptions: AppsPanelSDK.Security.Options {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class StatsManager {
+  public static let shared: AppsPanelSDK.StatsManager
+  public func logEvent(_ tag: Swift.String, context: AppsPanelSDK.Stats.Context? = nil)
+  public func logView(_ tag: Swift.String, context: AppsPanelSDK.Stats.Context? = nil)
+  @objc deinit
+}
+public struct Stats : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct AuthenticationTokenManager {
+  public enum Error : Swift.Error {
+    case emptyToken
+    public static func == (a: AppsPanelSDK.AuthenticationTokenManager.Error, b: AppsPanelSDK.AuthenticationTokenManager.Error) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public static func token() -> Swift.String?
+  public static func saveToken(_ token: Swift.String) throws
+  public static func deleteToken()
+}
+public protocol Upload {
+  var parameters: [Swift.String : Swift.String] { get set }
+  var headers: AppsPanelSDK.Headers { get set }
+}
+@_hasMissingDesignatedInitializers public class TextManager {
+  public static let shared: AppsPanelSDK.TextManager
+  public var language: Swift.String {
+    get
+  }
+  public var forcedLanguage: Swift.String? {
+    get
+  }
+  @available(*, deprecated, message: "Use language property instead")
+  public var currentLocale: Foundation.Locale {
+    get
+  }
+  @available(*, deprecated)
+  public var defaultLocale: Foundation.Locale? {
+    get
+  }
+  public var texts: [AppsPanelSDK.TextCollection.Key : Swift.String]
+  @available(*, deprecated, message: "Use forceLanguage(_:) instead")
+  public func setLocale(_ locale: Foundation.Locale, default defaultLocale: Foundation.Locale? = nil)
+  public func forceLanguage(_ language: Swift.String)
+  public func resetLanguage()
+  public func string(forKey key: Swift.String) -> Swift.String
+  public func string(forKey key: Swift.String, _ arguments: Swift.CustomStringConvertible...) -> Swift.String
+  public func string(forKey key: Swift.String, arguments: [Swift.CustomStringConvertible]) -> Swift.String
+  public func string(forKey key: Swift.String, keyedArguments: [Swift.String : Swift.CustomStringConvertible]) -> Swift.String
+  public func downloadTexts()
+  @objc deinit
+}
+extension AppsPanelSDK.TextManager {
+  public enum Error : Swift.Error {
+    case bundleFileMissing
+    public static func == (a: AppsPanelSDK.TextManager.Error, b: AppsPanelSDK.TextManager.Error) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+public struct FormData {
+  public var data: Foundation.Data {
+    get
+  }
+  public let boundary: Swift.String
+  public init(boundary: Swift.String = UUID().uuidString)
+  public mutating func append(_ file: Foundation.Data, withName name: Swift.String = "file", fileName: Swift.String, mimeType: Swift.String)
+  public mutating func append(_ file: AppsPanelSDK.File, withName name: Swift.String)
+  public mutating func append(_ data: Foundation.Data, withName name: Swift.String)
+  public mutating func append(_ string: Swift.String, withName name: Swift.String)
+  public mutating func append(_ stringConvertible: Swift.LosslessStringConvertible, withName name: Swift.String)
+  public mutating func append(_ array: [Foundation.Data], withName name: Swift.String)
+  public mutating func append(_ array: [Swift.String], withName name: Swift.String)
+}
+public struct PushNotificationLegacyUserInfo : Swift.Decodable {
+  public init(from request: UserNotifications.UNNotificationRequest) throws
+  public init(from userInfo: [Swift.String : Any]) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public typealias Parameters = [Swift.String : Any]
+public typealias Headers = [Swift.String : Swift.String]
+public enum HTTPMethod : Swift.String, Swift.Codable {
+  case get
+  case post
+  case patch
+  case put
+  case delete
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class RequestManager {
+  public var inhibitsCancellationErrors: Swift.Bool
+  public var defaultSecurityOptions: AppsPanelSDK.Security.Options
+  public static var `default`: AppsPanelSDK.RequestManager {
+    get
+  }
+  public init(baseURL: Foundation.URL)
+  @discardableResult
+  public func request(_ path: Swift.String, method: AppsPanelSDK.HTTPMethod, parameters: AppsPanelSDK.Parameters? = nil) -> AppsPanelSDK.DataRequest
+  @discardableResult
+  public func upload(_ fileUpload: AppsPanelSDK.FileUpload, completion completionHandler: @escaping AppsPanelSDK.FileUploadCompletionHandler) -> Foundation.URLSessionTask?
+  @discardableResult
+  public func upload(_ imageUpload: AppsPanelSDK.ImageUpload, completion completionHandler: @escaping AppsPanelSDK.ImageUploadCompletionHandler) -> Foundation.URLSessionTask?
+  @objc deinit
+}
+extension AppsPanelSDK.PushNotificationUserInfo.Sender : Swift.Equatable {}
+extension AppsPanelSDK.PushNotificationUserInfo.Sender : Swift.Hashable {}
+extension AppsPanelSDK.PushNotificationUserInfo.Sender : Swift.RawRepresentable {}
+extension AppsPanelSDK.RequestError.Cause.EncodingContext : Swift.Equatable {}
+extension AppsPanelSDK.RequestError.Cause.EncodingContext : Swift.Hashable {}
+extension AppsPanelSDK.AuthenticationTokenManager.Error : Swift.Equatable {}
+extension AppsPanelSDK.AuthenticationTokenManager.Error : Swift.Hashable {}
+extension AppsPanelSDK.TextManager.Error : Swift.Equatable {}
+extension AppsPanelSDK.TextManager.Error : Swift.Hashable {}
+extension AppsPanelSDK.HTTPMethod : Swift.Equatable {}
+extension AppsPanelSDK.HTTPMethod : Swift.Hashable {}
+extension AppsPanelSDK.HTTPMethod : Swift.RawRepresentable {}
