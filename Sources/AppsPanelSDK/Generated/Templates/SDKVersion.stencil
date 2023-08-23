@@ -1,0 +1,16 @@
+//
+//  SDKVersion.stencil
+//  AppsPanelSDK
+//
+//  Copyright © 2022 Apps Panel. All rights reserved.
+//
+
+import Foundation
+
+extension AppsPanel {
+    
+    var version: String {
+        return "{{argument.version}}"
+    }
+    
+}

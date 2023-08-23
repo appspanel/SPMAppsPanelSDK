@@ -32,6 +32,15 @@ public class AppsPanel {
         }
     }
     
+    public var customHeaders: Headers? {
+        get {
+            return RequestManager.customHeaders
+        }
+        set {
+            RequestManager.customHeaders = newValue
+        }
+    }
+    
     // MARK: - Configuration
 
     private var _configuration: AppsPanel.Configuration?
@@ -133,6 +142,10 @@ public class AppsPanel {
         
         if let interstitialConfiguration = configuration.interstitialConfiguration {
             self.interstitialManager.configure(with: interstitialConfiguration)
+        }
+        
+        if let ratingConfiguration = configuration.ratingConfiguration {
+            RatingManager.shared.configure(with: ratingConfiguration, feedbackConfiguration: configuration.feedbackConfiguration)
         }
     }
 

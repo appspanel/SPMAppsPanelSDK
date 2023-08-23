@@ -13,7 +13,8 @@ public struct ImageUpload {
     public let file: File
     public let entity: UploadEntity?
     public let options: Options?
-
+    public var timeout: TimeInterval?
+    
     public init(file: File, entity: UploadEntity? = nil, options: Options? = nil) {
         self.file = file
         self.entity = entity

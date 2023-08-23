@@ -231,6 +231,15 @@ public class DataRequest {
     
     // MARK: - Default headers
     
+    private func setGlobalCustomHeaders() {
+        guard let headers = RequestManager.customHeaders else {
+            return
+        }
+        
+        // Prioritize request-level headers
+        urlRequest.allHTTPHeaderFields?.merge(headers) { current, _ in current }
+    }
+    
     private func setDefaultHeaders() {
         var defaultHeaders: [String: String] = [:]
 
@@ -243,15 +252,17 @@ public class DataRequest {
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             defaultHeaders["X-AP-AppVersion"] = appVersion
         }
-
         
-      //  if let sdkVersion = Bundle.appsPanel.infoDictionary?["CFBundleShortVersionString"] as? String {
-        defaultHeaders["X-AP-SDKVersion"] =  "5.3.1"// sdkVersion
-       // }
+        if let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            defaultHeaders["X-AP-BuildVersion"] = buildVersion
+        }
 
+        defaultHeaders["X-AP-SDKVersion"] = AppsPanel.shared.version
+        
         defaultHeaders["Accept-Charset"] = "utf-8"
         defaultHeaders["Accept-Language"] = TextManager.shared.language
         
+        // Prioritize user-defined headers
         urlRequest.allHTTPHeaderFields?.merge(defaultHeaders) { current, _ in current }
     }
 
@@ -259,6 +270,7 @@ public class DataRequest {
 
     // Modifies the URL request as it should be sent by setting the request's body and applying security with encryption and JWT.
     private func finalizeURLRequest() {
+        setGlobalCustomHeaders()
         setDefaultHeaders()
         
         // Timeout

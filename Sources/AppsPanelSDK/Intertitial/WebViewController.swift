@@ -1,5 +1,5 @@
 //
-//  WebViewInterstitialViewController.swift
+//  WebViewController.swift
 //  AppsPanelSDK
 //
 //  Created by Arnaud Olivier on 01/06/2020.
@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class WebViewInterstitialViewController: UIViewController {
+class WebViewController: UIViewController {
 
     private let activityIndicatorView: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .white)
@@ -25,15 +25,17 @@ class WebViewInterstitialViewController: UIViewController {
         button.setImage(UIImage(named: "close", in: Bundle.appsPanelResources, compatibleWith: nil), for: .normal)
         return button
     }()
-
-    private let interstitial: Interstitial
-
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
+    
+    private let url: URL?
+    
+    var onLinkActivation: ((URL) -> ())?
 
-    init(interstitial: Interstitial) {
-        self.interstitial = interstitial
+    init(url: URL?) {
+        self.url = url
         super.init(nibName: nil, bundle: nil)
         setUpView()
         setUpConstraints()
@@ -89,7 +91,7 @@ class WebViewInterstitialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let url = interstitial.webViewURL else {
+        guard let url else {
             return
         }
 
@@ -130,7 +132,7 @@ class WebViewInterstitialViewController: UIViewController {
 
 }
 
-extension WebViewInterstitialViewController: WKNavigationDelegate {
+extension WebViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard
@@ -140,8 +142,8 @@ extension WebViewInterstitialViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
-
-        StatsManager.shared.logEvent("SDK_INTERSTITIAL_\(interstitial.id)_CLICK", context: ["url": AnyCodable(url)])
+        
+        onLinkActivation?(url)
 
         UIApplication.shared.open(url)
         decisionHandler(.cancel)

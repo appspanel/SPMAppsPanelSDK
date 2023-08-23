@@ -33,12 +33,13 @@ struct DeviceInfo: Codable, Equatable {
     let modelVersion: String
 
     let screenResolution: String
+    let pixelRatio: CGFloat
     let carrier: String?
     
     init() {
         self.appID = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
         self.appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-        self.sdkVersion = Bundle(for: AppsPanel.self).infoDictionary?["CFBundleShortVersionString"] as! String
+        self.sdkVersion = AppsPanel.shared.version
 
         self.os = "iOS"
         self.osVersion = UIDevice.current.systemVersion
@@ -60,6 +61,7 @@ struct DeviceInfo: Codable, Equatable {
         }()
 
         self.screenResolution = "\(Int(UIScreen.main.bounds.width))*\(Int(UIScreen.main.bounds.height))"
+        self.pixelRatio = UIScreen.main.scale
         self.carrier = {
             #if targetEnvironment(simulator)
             return nil
@@ -82,6 +84,7 @@ struct DeviceInfo: Codable, Equatable {
         case model
         case modelVersion
         case screenResolution
+        case pixelRatio
         case carrier
     }
 

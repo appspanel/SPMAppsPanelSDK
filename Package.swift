@@ -14,6 +14,7 @@ let package = Package(
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.0.0")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.0.0"),
         .package(url: "https://github.com/Kitura/Swift-JWT.git", .upToNextMinor(from: "3.6.200")),
+        .package(url: "https://github.com/DataDog/dd-sdk-ios.git", .upToNextMajor(from: "1.17.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -22,7 +23,8 @@ let package = Package(
             name: "AppsPanelSDK",
             dependencies: [.product(name: "Alamofire", package: "Alamofire"),
                            .product(name: "KeychainAccess", package: "KeychainAccess"),
-                           .product(name: "SwiftJWT", package: "Swift-JWT")]),
+                           .product(name: "SwiftJWT", package: "Swift-JWT"),
+                           .product(name: "Datadog", package: "dd-sdk-ios")]),
         .testTarget(
             name: "AppsPanelSDKv5PackageTests",
             dependencies: ["AppsPanelSDK"]),

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+import UserNotifications
 
 struct PushNotificationStorage {
     

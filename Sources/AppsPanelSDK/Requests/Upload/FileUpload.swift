@@ -12,7 +12,8 @@ public struct FileUpload {
 
     public let file: File
     public let entity: UploadEntity?
-
+    public var timeout: TimeInterval?
+    
     public init(file: File, entity: UploadEntity? = nil) {
         self.file = file
         self.entity = entity

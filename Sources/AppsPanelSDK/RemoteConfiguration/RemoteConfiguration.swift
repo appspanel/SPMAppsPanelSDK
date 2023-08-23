@@ -28,6 +28,8 @@ public struct RemoteConfiguration: Decodable {
     public let logConfiguration: LogConfiguration?
     public let dialogConfiguration: DialogConfiguration?
     public let interstitialConfiguration: InterstitialConfiguration?
+    public let ratingConfiguration: RatingConfiguration?
+    public let feedbackConfiguration: FeedbackConfiguration?
 
     public internal(set) var applicationParameters: [String: Any]? = nil
 
@@ -47,6 +49,8 @@ public struct RemoteConfiguration: Decodable {
         case dialog
         case interstitial
         case textManager
+        case rating
+        case feedback
     }
 
     public init(from decoder: Decoder) throws {
@@ -81,6 +85,20 @@ public struct RemoteConfiguration: Decodable {
         } catch {
             interstitialConfiguration = nil
             print("[Remote Configuration] Interstitial configuration is missing or invalid.")
+        }
+        
+        do {
+            ratingConfiguration = try componentsContainer.decode(RatingConfiguration.self, forKey: .rating)
+        } catch {
+            ratingConfiguration = nil
+            print("[Remote Configuration] Rating configuration is missing or invalid.")
+        }
+        
+        do {
+            feedbackConfiguration = try componentsContainer.decode(FeedbackConfiguration.self, forKey: .feedback)
+        } catch {
+            feedbackConfiguration = nil
+            print("[Remote Configuration] Feedback configuration is missing or invalid.")
         }
     }
 
@@ -189,4 +207,25 @@ extension RemoteConfiguration {
 
     }
 
+    public struct RatingConfiguration: Enableable, Codable {
+        
+        public let isEnabled: Bool
+        public let minTimeSinceLastView: TimeInterval
+        public let minLaunchNumberSinceLastView: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case isEnabled = "active"
+            case minTimeSinceLastView
+            case minLaunchNumberSinceLastView
+        }
+    }
+    
+    public struct FeedbackConfiguration: Enableable, Codable {
+        
+        public let isEnabled: Bool
+        
+        enum CodingKeys: String, CodingKey {
+            case isEnabled = "active"
+        }
+    }
 }

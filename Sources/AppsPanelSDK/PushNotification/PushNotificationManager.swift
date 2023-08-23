@@ -6,8 +6,9 @@
 //  Copyright © 2018 Apps Panel. All rights reserved.
 //
 
-import UserNotifications
+import SafariServices
 import UIKit
+import UserNotifications
 
 public class PushNotificationManager {
     
@@ -202,6 +203,32 @@ public class PushNotificationManager {
 
     public func sendStatistic(notification: PushNotificationUserInfo) {
         sendStatistic(id: notification.id, action: .received)
+    }
+    
+    // MARK: Notification action
+    
+    public func manageNotificationAction(forUserInfo userInfo: [AnyHashable : Any]) {
+        guard let topViewController = UIApplication.shared.activeWindow?.topMostController() else {
+            return
+        }
+        
+        if let urlString = userInfo["url_redirect"] as? String,
+           let url = URL(string: urlString)
+        {
+            let vc = WebViewController(url: url)
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Prevents crash at launch
+                topViewController.present(vc, animated: true)
+            }
+            return
+        }
+        
+        if let data = userInfo["data"] as? [String: Any],
+        let ratingCampaignID = data["apnl_id_rating"] as? Int
+        {
+            RatingManager.shared.presentRating(forCampaignID: ratingCampaignID)
+        }
     }
 
 }

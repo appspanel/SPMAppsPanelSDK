@@ -37,6 +37,8 @@ public class RequestManager {
         }
         return _default!
     }
+    
+    static var customHeaders: Headers?
 
     // MARK: Initialize a request manager
 
@@ -66,6 +68,7 @@ public class RequestManager {
         let urlRequest = self.urlRequest(fileUpload: fileUpload)
         let dataRequest = DataRequest(requestManager: self, request: urlRequest)
         dataRequest.useUserToken()
+        dataRequest.timeout = fileUpload.timeout
         return dataRequest
     }
 
@@ -73,6 +76,7 @@ public class RequestManager {
         let urlRequest = self.urlRequest(imageUpload: imageUpload)
         let dataRequest = DataRequest(requestManager: self, request: urlRequest)
         dataRequest.useUserToken()
+        dataRequest.timeout = imageUpload.timeout
         return dataRequest
     }
 

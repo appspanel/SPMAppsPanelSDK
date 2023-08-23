@@ -16,6 +16,10 @@ enum WebService {
     case postPushStatistic(_: Stats.PushNotificationEvent)
     case postStats(_: Stats)
     case dialog
+    case getRatingsConfiguration(campaignID: Int? = nil)
+    case postRatings
+    case getFeedbackConfiguration
+    case postFeedback
 }
 
 extension WebService: Endpoint {
@@ -33,6 +37,10 @@ extension WebService: Endpoint {
             return "sdk/statistics"
         case .dialog:
             return "sdk/dialog"
+        case .getRatingsConfiguration, .postRatings:
+            return "sdk/rating"
+        case .getFeedbackConfiguration, .postFeedback:
+            return "sdk/feedback"
         }
     }
 
@@ -50,6 +58,14 @@ extension WebService: Endpoint {
             return .post
         case .dialog:
             return .get
+        case .getRatingsConfiguration:
+            return .get
+        case .postRatings:
+            return .post
+        case .getFeedbackConfiguration:
+            return .get
+        case .postFeedback:
+            return .post
         }
     }
 
@@ -57,6 +73,12 @@ extension WebService: Endpoint {
         switch self {
         case .texts(let language):
             return ["locale": language]
+        case .getRatingsConfiguration(let campaignID):
+            if let campaignID {
+                return ["campaign_id": campaignID]
+            } else {
+                return nil
+            }
         default:
             return nil
         }

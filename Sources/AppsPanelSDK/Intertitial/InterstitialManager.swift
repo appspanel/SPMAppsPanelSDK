@@ -82,7 +82,7 @@ public class InterstitialManager {
         case .image:
             interstitialViewController = ImageInterstitialViewController(interstitial: interstitial)
         case .webView:
-            interstitialViewController = WebViewInterstitialViewController(interstitial: interstitial)
+            interstitialViewController = WebInterstitialViewController(interstitial: interstitial)
         }
         interstitialViewController.modalPresentationStyle = .fullScreen
         viewController.present(interstitialViewController, animated: false)
