@@ -95,7 +95,7 @@ class RemoteConfigurationManager {
     }
     
     private func defaultRemoteConfiguration() -> RemoteConfiguration? {
-        let bundle = Bundle.appsPanelResources
+        let bundle = Bundle.module
         
         guard let url = bundle.url(forResource: defaultFileName, withExtension: nil) else {
             return nil

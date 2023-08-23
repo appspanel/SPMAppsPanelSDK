@@ -76,7 +76,7 @@ private extension FeedbackViewController {
         title = configuration.feedbackTitle
         
         navigationItem.hidesBackButton = true
-        let closeImage = UIImage(named: "navbar_close", in: .appsPanelResources, compatibleWith: nil)?
+        let closeImage = UIImage(named: "navbar_close", in: Bundle.module, compatibleWith: nil)?
             .withRenderingMode(.alwaysTemplate)
         let closeButton = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(cancel))
         navigationItem.leftBarButtonItem = closeButton

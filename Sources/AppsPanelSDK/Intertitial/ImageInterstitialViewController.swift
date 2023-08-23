@@ -26,7 +26,7 @@ class ImageInterstitialViewController: UIViewController {
 
     private let closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "close", in: Bundle.appsPanelResources, compatibleWith: nil), for: .normal)
+        button.setImage(UIImage(named: "close", in: Bundle.module, compatibleWith: nil), for: .normal)
         return button
     }()
 

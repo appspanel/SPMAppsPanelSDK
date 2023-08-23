@@ -91,7 +91,7 @@ private extension RatingStarsView {
             let starButton = UIButton()
             starButton.isUserInteractionEnabled = false
             starButton.tintColor = style.starOffColor
-            let image = UIImage(named: "star_off", in: .appsPanelResources, compatibleWith: nil)?
+            let image = UIImage(named: "star_off", in: Bundle.module, compatibleWith: nil)?
                 .withRenderingMode(.alwaysTemplate)
             starButton.setImage(image, for: .normal)
             starsStackView.addArrangedSubview(starButton)
@@ -107,12 +107,12 @@ private extension RatingStarsView {
         starButtons.forEach { button in
             if let index = starButtons.firstIndex(of: button) {
                 if index <= indexButtonPressed {
-                    let image = UIImage(named: "star_on", in: .appsPanelResources, compatibleWith: nil)?
+                    let image = UIImage(named: "star_on", in: Bundle.module, compatibleWith: nil)?
                         .withRenderingMode(.alwaysTemplate)
                     button.setImage(image, for: .normal)
                     button.tintColor = style.starOnColor
                 } else {
-                    let image = UIImage(named: "star_off", in: .appsPanelResources, compatibleWith: nil)?
+                    let image = UIImage(named: "star_off", in: Bundle.module, compatibleWith: nil)?
                         .withRenderingMode(.alwaysTemplate)
                     button.setImage(image, for: .normal)
                     button.tintColor = style.starOffColor

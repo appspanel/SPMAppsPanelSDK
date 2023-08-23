@@ -25,7 +25,7 @@ let package = Package(
                            .product(name: "KeychainAccess", package: "KeychainAccess"),
                            .product(name: "SwiftJWT", package: "Swift-JWT"),
                            .product(name: "Datadog", package: "dd-sdk-ios")],
-            resources: [.process("Resources/images")]),
+            resources: [.process("Resources")]),
         .testTarget(
             name: "AppsPanelSDKv5PackageTests",
             dependencies: ["AppsPanelSDK"]),
