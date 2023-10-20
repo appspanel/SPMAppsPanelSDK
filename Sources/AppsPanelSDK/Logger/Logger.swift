@@ -11,17 +11,15 @@ import Foundation
 public class Logger {
     
     private let ddLogger: DatadogLogger
-    
-    private static let ddClientToken = "pub09aff193d23a51facfe608f6665335ed"
-    
+        
     public init() {
         ddLogger = DatadogLogger()
         ddLogger.deviceIdentifier = AppsPanel.shared.deviceIdentifier
     }
     
-    public static func configure(environment: String) {
+    public static func configure(environment: String, clientToken: String) {
         DatadogLogger.configure(
-            clientToken: ddClientToken,
+            clientToken: clientToken,
             environment: environment
         )
     }
