@@ -5,33 +5,29 @@
 //  Created by Arnaud Olivier on 25/01/2023.
 //  Copyright © 2023 Apps Panel. All rights reserved.
 //
+import DatadogCore
+import DatadogLogs
 import Foundation
-import Datadog
 
 class DatadogLogger {
     
-    private let logger: DDLogger
+    private let logger: LoggerProtocol
     
     init() {
-        self.logger = DDLogger.builder
-            .sendNetworkInfo(false)
-            .printLogsToConsole(true, usingFormat: .short)
-            .build()
+        self.logger = DatadogLogs.Logger.create(
+            with: DatadogLogs.Logger.Configuration(
+                networkInfoEnabled: false,
+                consoleLogFormat: .short
+            )
+        )
     }
     
     static func configure(
         clientToken: String,
         environment: String
     ) {
-        Datadog.initialize(
-            appContext: .init(),
-            trackingConsent: .granted,
-            configuration: Datadog.Configuration
-                .builderUsing(clientToken: clientToken, environment: environment) // dev/qa/prod
-                .set(serviceName: Bundle.main.bundleIdentifier ?? "") // App ID
-                .set(endpoint: .eu1)
-                .build()
-        )
+        Datadog.initialize(with:Datadog.Configuration(clientToken: clientToken, env: environment, site: .eu1, service: Bundle.main.bundleIdentifier ?? ""), trackingConsent: .granted)
+        Logs.enable()
     }
     
     var deviceIdentifier: String? {

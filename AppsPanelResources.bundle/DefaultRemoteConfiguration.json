@@ -2,24 +2,11 @@
     "app_name": "default",
     "timeout": 30,
     "components": {
-        "ad": {
-            "active": false,
-            "delay": 1
-        },
         "interstitial": {
             "active": false,
             "auto": true,
             "delay": 1,
             "display_limit": 10
-        },
-        "poll": {
-            "active": false,
-            "delay": 1
-        },
-        "location": {
-            "active": false,
-            "delay": 0,
-            "auto": true
         },
         "push": {
             "active": true,
@@ -36,25 +23,9 @@
                 "bluetooth": false
             }
         },
-        "crash": {
-            "active": false,
-            "delay": 0
-        },
         "version": {
             "active": false,
             "delay": 0
-        },
-        "note": {
-            "active": false,
-            "delay": 0,
-            "first_time": 3,
-            "frequency": 2,
-            "texts": {
-                "title": "Voulez-vous noter l'application ?",
-                "yes_button": "Je note !",
-                "no_button": "Non merci :(",
-                "later_button": "Plus tard..."
-            }
         },
         "stat": {
             "active": true,
@@ -64,47 +35,16 @@
             "active": false,
             "delay": 1
         },
-        "log": {
-            "active": false,
-            "app": {
-                "active": true,
-                "display": true,
-                "stream": true,
-                "level": "info"
-            },
-            "sdk": {
-                "active": true,
-                "display": true,
-                "stream": true,
-                "level": "info"
-            },
-            "ws": {
-                "active": true,
-                "display": true,
-                "stream": true,
-                "level": "info"
-            },
-            "stream_url": "wss:\/\/log-stream.default-prod.apnl.ws:1356"
-        },
-        "feedback": {
-            "active": false,
-            "delay": 0,
-            "network": {
-                "duration": 120,
-                "frequence": 10,
-                "level_bad": 10,
-                "level_good": 100,
-                "level_best": 400,
-                "file": "https:\/\/pub-default-prod.apnl.ws\/test100k.db"
-            },
-            "display_send": true
-        },
         "text_manager": {
             "active": true
+        },
+        "feedback": {
+            "active": false
+        },
+        "rating": {
+            "active": false,
+            "min_time_since_last_view": 7776000,
+            "min_launch_number_since_last_view": 100
         }
-    },
-    "parameters": {
-        "outdated_limit": 1200,
-        "down_limit": 2400
     }
 }

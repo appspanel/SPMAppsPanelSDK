@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
 // swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AppsPanelSDK
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import Alamofire
@@ -7,9 +7,12 @@ import Alamofire
 import CommonCrypto
 import CoreServices
 import CoreTelephony
+import DatadogCore
+import DatadogLogs
 import Dispatch
 import Foundation
 import KeychainAccess
+import SafariServices
 import Swift
 import SwiftJWT
 import UIKit
@@ -17,6 +20,7 @@ import UserNotifications
 import WebKit
 import _Concurrency
 import _StringProcessing
+import _SwiftConcurrencyShims
 public struct AnyDecodable : Swift.Decodable {
   public let value: Any
   public init<T>(_ value: T?)
@@ -29,7 +33,7 @@ internal protocol _AnyDecodable {
 extension AppsPanelSDK.AnyDecodable : AppsPanelSDK._AnyDecodable {
 }
 extension AppsPanelSDK._AnyDecodable {
-  public init(from decoder: Swift.Decoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 extension AppsPanelSDK.AnyDecodable : Swift.Equatable {
   public static func == (lhs: AppsPanelSDK.AnyDecodable, rhs: AppsPanelSDK.AnyDecodable) -> Swift.Bool
@@ -53,15 +57,20 @@ extension AppsPanelSDK.AnyDecodable : Swift.CustomDebugStringConvertible {
   @available(iOS 10.0, *)
   public func manageNotification(_ notification: UserNotifications.UNNotification, show: Swift.Bool, state: UIKit.UIApplication.State, completionHandler: @escaping ((UserNotifications.UNNotificationPresentationOptions) -> Swift.Void))
   public func sendStatistic(notification: AppsPanelSDK.PushNotificationUserInfo)
+  public func manageNotificationAction(forUserInfo userInfo: [Swift.AnyHashable : Any])
   @objc deinit
 }
 @_hasMissingDesignatedInitializers public class AppsPanel {
   public static let shared: AppsPanelSDK.AppsPanel
-  weak public var delegate: AppsPanelSDK.AppsPanelDelegate?
+  weak public var delegate: (any AppsPanelSDK.AppsPanelDelegate)?
   public var deviceIdentifier: Swift.String {
     get
   }
   public var usesLegacyDeviceIdentifier: Swift.Bool {
+    get
+    set
+  }
+  public var customHeaders: AppsPanelSDK.Headers? {
     get
     set
   }
@@ -92,8 +101,14 @@ extension AppsPanelSDK.AppsPanelDelegate {
 public struct FileUpload {
   public let file: AppsPanelSDK.File
   public let entity: AppsPanelSDK.UploadEntity?
+  public var timeout: Foundation.TimeInterval?
   public init(file: AppsPanelSDK.File, entity: AppsPanelSDK.UploadEntity? = nil)
   public init(data: Foundation.Data, entity: AppsPanelSDK.UploadEntity? = nil)
+}
+@_hasMissingDesignatedInitializers public class RatingManager {
+  public static let shared: AppsPanelSDK.RatingManager
+  public func presentRating()
+  @objc deinit
 }
 public struct ImageUploadResponse : AppsPanelSDK.Response {
   public let uploadedImage: AppsPanelSDK.UploadedImage
@@ -107,8 +122,8 @@ public struct UploadedImage : Swift.Codable {
   public let smallURL: Foundation.URL
   public let mediumURL: Foundation.URL
   public let largeURL: Foundation.URL
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public struct TextCollection : Swift.Codable {
   public typealias Key = Swift.String
@@ -124,8 +139,8 @@ public struct TextCollection : Swift.Codable {
     get
   }
   public let texts: AppsPanelSDK.TextCollection.LocalizedTexts
-  public init(from decoder: Swift.Decoder) throws
-  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
   public subscript(key: Swift.String) -> Swift.String? {
     get
   }
@@ -140,28 +155,31 @@ public struct RemoteConfiguration : Swift.Decodable {
   public let logConfiguration: AppsPanelSDK.RemoteConfiguration.LogConfiguration?
   public let dialogConfiguration: AppsPanelSDK.RemoteConfiguration.DialogConfiguration?
   public let interstitialConfiguration: AppsPanelSDK.RemoteConfiguration.InterstitialConfiguration?
+  public let ratingConfiguration: AppsPanelSDK.RemoteConfiguration.RatingConfiguration?
+  public let feedbackConfiguration: AppsPanelSDK.RemoteConfiguration.FeedbackConfiguration?
+  public let versionConfiguration: AppsPanelSDK.RemoteConfiguration.VersionConfiguration?
   public var applicationParameters: [Swift.String : Any]? {
     get
   }
-  public init(from decoder: Swift.Decoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 extension AppsPanelSDK.RemoteConfiguration {
   public struct DeviceInfoConfiguration : Swift.Codable {
     public let isEnabled: Swift.Bool
-    public func encode(to encoder: Swift.Encoder) throws
-    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
   public struct PushNotificationConfiguration : Swift.Codable {
     public let isEnabled: Swift.Bool
     public let delay: Swift.Int
     public let auto: Swift.Bool
-    public func encode(to encoder: Swift.Encoder) throws
-    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
   public struct StatConfiguration : Swift.Codable {
     public let isEnabled: Swift.Bool
-    public func encode(to encoder: Swift.Encoder) throws
-    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
   public struct LogConfiguration : Swift.Codable {
     public struct ContextConfiguration : Swift.Codable {
@@ -169,34 +187,52 @@ extension AppsPanelSDK.RemoteConfiguration {
       public let consoleEnabled: Swift.Bool
       public let streamEnabled: Swift.Bool
       public let level: Swift.String
-      public func encode(to encoder: Swift.Encoder) throws
-      public init(from decoder: Swift.Decoder) throws
+      public func encode(to encoder: any Swift.Encoder) throws
+      public init(from decoder: any Swift.Decoder) throws
     }
     public let isEnabled: Swift.Bool
     public let app: AppsPanelSDK.RemoteConfiguration.LogConfiguration.ContextConfiguration
     public let sdk: AppsPanelSDK.RemoteConfiguration.LogConfiguration.ContextConfiguration
     public let ws: AppsPanelSDK.RemoteConfiguration.LogConfiguration.ContextConfiguration
-    public func encode(to encoder: Swift.Encoder) throws
-    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
   public struct DialogConfiguration : Swift.Codable {
     public let isEnabled: Swift.Bool
     public let delay: Swift.Int
-    public func encode(to encoder: Swift.Encoder) throws
-    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
   public struct InterstitialConfiguration : Swift.Codable {
     public let isEnabled: Swift.Bool
     public let auto: Swift.Bool
     public let delay: Swift.Int
     public let displayLimit: Foundation.TimeInterval
-    public func encode(to encoder: Swift.Encoder) throws
-    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
   public struct TextManagerConfiguration : Swift.Codable {
     public let isEnabled: Swift.Bool
-    public func encode(to encoder: Swift.Encoder) throws
-    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+  public struct RatingConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public let minTimeSinceLastView: Foundation.TimeInterval
+    public let minLaunchNumberSinceLastView: Swift.Int
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+  public struct FeedbackConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+  public struct VersionConfiguration : Swift.Codable {
+    public let isEnabled: Swift.Bool
+    public let delay: Swift.Int
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
   }
 }
 public protocol Cancellable {
@@ -234,7 +270,7 @@ public struct PushNotificationUserInfo : Swift.Codable {
   public enum Sender : Swift.String, Swift.Codable {
     case apnl
     case other
-    public init(from decoder: Swift.Decoder) throws
+    public init(from decoder: any Swift.Decoder) throws
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
@@ -243,8 +279,8 @@ public struct PushNotificationUserInfo : Swift.Codable {
   }
   public init(from request: UserNotifications.UNNotificationRequest) throws
   public init(from userInfo: [Swift.String : Any]) throws
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 extension AppsPanelSDK.PushNotificationUserInfo {
   public func extractAttachment() -> UserNotifications.UNNotificationAttachment?
@@ -268,13 +304,14 @@ public struct FileUploadResponse : AppsPanelSDK.Response {
 }
 public struct UploadedFile : Swift.Codable {
   public let url: Foundation.URL
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public struct ImageUpload {
   public let file: AppsPanelSDK.File
   public let entity: AppsPanelSDK.UploadEntity?
   public let options: AppsPanelSDK.ImageUpload.Options?
+  public var timeout: Foundation.TimeInterval?
   public init(file: AppsPanelSDK.File, entity: AppsPanelSDK.UploadEntity? = nil, options: AppsPanelSDK.ImageUpload.Options? = nil)
   public init(data: Foundation.Data, entity: AppsPanelSDK.UploadEntity? = nil, options: AppsPanelSDK.ImageUpload.Options? = nil)
 }
@@ -365,14 +402,14 @@ public struct RequestError : Swift.Error {
 }
 extension AppsPanelSDK.RequestError {
   public enum Cause : Swift.Error {
-    case network(error: Swift.Error)
+    case network(error: any Swift.Error)
     case invalidURL
-    case encodingFailed(context: AppsPanelSDK.RequestError.Cause.EncodingContext, error: Swift.Error)
-    case decodingFailed(error: Swift.Error)
+    case encodingFailed(context: AppsPanelSDK.RequestError.Cause.EncodingContext, error: any Swift.Error)
+    case decodingFailed(error: any Swift.Error)
     case badStatusCode(Swift.Int)
     case missingAuthenticationToken
-    case jsonWebTokenCreationFailed(error: Swift.Error)
-    case encryptionFailed(error: Swift.Error)
+    case jsonWebTokenCreationFailed(error: any Swift.Error)
+    case encryptionFailed(error: any Swift.Error)
     case decryptionFailed(error: AppsPanelSDK.DecryptionError)
     case unknown
     public enum EncodingContext {
@@ -391,7 +428,7 @@ extension AppsPanelSDK.RequestError {
 public enum DecryptionError : Swift.Error {
   case missingSecretHeader
   case invalidData
-  case decryptionFailed(error: Swift.Error)
+  case decryptionFailed(error: any Swift.Error)
 }
 extension AppsPanelSDK.RequestError {
   public func isURLError(with code: Foundation.URLError.Code) -> Swift.Bool
@@ -412,8 +449,8 @@ public struct BackendErrorInfo : Swift.Codable {
   public let code: Swift.Int
   public let key: Swift.String
   public let message: Swift.String
-  public init(from decoder: Swift.Decoder) throws
-  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
 }
 public struct AnyEncodable : Swift.Encodable {
   public let value: Any
@@ -427,7 +464,7 @@ internal protocol _AnyEncodable {
 extension AppsPanelSDK.AnyEncodable : AppsPanelSDK._AnyEncodable {
 }
 extension AppsPanelSDK._AnyEncodable {
-  public func encode(to encoder: Swift.Encoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
 }
 extension AppsPanelSDK.AnyEncodable : Swift.Equatable {
   public static func == (lhs: AppsPanelSDK.AnyEncodable, rhs: AppsPanelSDK.AnyEncodable) -> Swift.Bool
@@ -546,6 +583,11 @@ public struct UploadEntity {
   public let id: Swift.String?
   public init(name: Swift.String, id: Swift.String? = nil)
 }
+@_hasMissingDesignatedInitializers public class FeedbackManager {
+  public static let shared: AppsPanelSDK.FeedbackManager
+  public func presentFeedback()
+  @objc deinit
+}
 public struct File {
   public let data: Foundation.Data
   public let mimeType: Swift.String
@@ -580,13 +622,16 @@ extension AppsPanelSDK.Endpoint {
 }
 @_hasMissingDesignatedInitializers public class StatsManager {
   public static let shared: AppsPanelSDK.StatsManager
+  public func startDurationKpi(tag: Swift.String, context: AppsPanelSDK.Stats.Context? = nil)
+  public func endDurationKpi(tag: Swift.String)
+  public func endAllDurationKpis()
   public func logEvent(_ tag: Swift.String, context: AppsPanelSDK.Stats.Context? = nil)
   public func logView(_ tag: Swift.String, context: AppsPanelSDK.Stats.Context? = nil)
   @objc deinit
 }
 public struct Stats : Swift.Codable {
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public struct AuthenticationTokenManager {
   public enum Error : Swift.Error {
@@ -623,9 +668,9 @@ public struct AuthenticationTokenManager {
   public func forceLanguage(_ language: Swift.String)
   public func resetLanguage()
   public func string(forKey key: Swift.String) -> Swift.String
-  public func string(forKey key: Swift.String, _ arguments: Swift.CustomStringConvertible...) -> Swift.String
-  public func string(forKey key: Swift.String, arguments: [Swift.CustomStringConvertible]) -> Swift.String
-  public func string(forKey key: Swift.String, keyedArguments: [Swift.String : Swift.CustomStringConvertible]) -> Swift.String
+  public func string(forKey key: Swift.String, _ arguments: any Swift.CustomStringConvertible...) -> Swift.String
+  public func string(forKey key: Swift.String, arguments: [any Swift.CustomStringConvertible]) -> Swift.String
+  public func string(forKey key: Swift.String, keyedArguments: [Swift.String : any Swift.CustomStringConvertible]) -> Swift.String
   public func downloadTexts()
   @objc deinit
 }
@@ -649,14 +694,30 @@ public struct FormData {
   public mutating func append(_ file: AppsPanelSDK.File, withName name: Swift.String)
   public mutating func append(_ data: Foundation.Data, withName name: Swift.String)
   public mutating func append(_ string: Swift.String, withName name: Swift.String)
-  public mutating func append(_ stringConvertible: Swift.LosslessStringConvertible, withName name: Swift.String)
+  public mutating func append(_ stringConvertible: any Swift.LosslessStringConvertible, withName name: Swift.String)
   public mutating func append(_ array: [Foundation.Data], withName name: Swift.String)
   public mutating func append(_ array: [Swift.String], withName name: Swift.String)
+}
+public class Logger {
+  public init()
+  public static func configure(environment: Swift.String, clientToken: Swift.String)
+  public var deviceIdentifier: Swift.String? {
+    get
+    set
+  }
+  public typealias Attributes = [Swift.String : any Swift.Encodable]
+  public func debug(_ message: Swift.String, attributes: AppsPanelSDK.Logger.Attributes? = nil)
+  public func info(_ message: Swift.String, attributes: AppsPanelSDK.Logger.Attributes? = nil)
+  public func notice(_ message: Swift.String, attributes: AppsPanelSDK.Logger.Attributes? = nil)
+  public func warn(_ message: Swift.String, attributes: AppsPanelSDK.Logger.Attributes? = nil)
+  public func error(_ message: Swift.String, attributes: AppsPanelSDK.Logger.Attributes? = nil)
+  public func critical(_ message: Swift.String, attributes: AppsPanelSDK.Logger.Attributes? = nil)
+  @objc deinit
 }
 public struct PushNotificationLegacyUserInfo : Swift.Decodable {
   public init(from request: UserNotifications.UNNotificationRequest) throws
   public init(from userInfo: [Swift.String : Any]) throws
-  public init(from decoder: Swift.Decoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public typealias Parameters = [Swift.String : Any]
 public typealias Headers = [Swift.String : Swift.String]
@@ -685,6 +746,10 @@ public class RequestManager {
   public func upload(_ fileUpload: AppsPanelSDK.FileUpload, completion completionHandler: @escaping AppsPanelSDK.FileUploadCompletionHandler) -> Foundation.URLSessionTask?
   @discardableResult
   public func upload(_ imageUpload: AppsPanelSDK.ImageUpload, completion completionHandler: @escaping AppsPanelSDK.ImageUploadCompletionHandler) -> Foundation.URLSessionTask?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class VersionManager {
+  public static let shared: AppsPanelSDK.VersionManager
   @objc deinit
 }
 extension AppsPanelSDK.PushNotificationUserInfo.Sender : Swift.Equatable {}

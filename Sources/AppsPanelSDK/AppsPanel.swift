@@ -147,6 +147,10 @@ public class AppsPanel {
         if let ratingConfiguration = configuration.ratingConfiguration {
             RatingManager.shared.configure(with: ratingConfiguration, feedbackConfiguration: configuration.feedbackConfiguration)
         }
+        
+        if let versionConfiguration = configuration.versionConfiguration {
+            VersionManager.shared.configure(with: versionConfiguration)
+        }
     }
 
     // MARK: -

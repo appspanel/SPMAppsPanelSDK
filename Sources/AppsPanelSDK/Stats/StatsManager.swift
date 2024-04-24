@@ -49,6 +49,57 @@ public class StatsManager {
         sendStats()
     }
     
+    // MARK: - Duration KPI Events
+    
+    private var currentDurationKpis: [String: Stats.APDurationKpi] = [:]
+
+    public func startDurationKpi(tag: String, context: Stats.Context? = nil) {
+        let kpi = Stats.APDurationKpi(tag: tag, context: context, sessionID: ApplicationSessionManager.shared.session.id, start: Date(), end: nil)
+        currentDurationKpis[tag] = kpi
+    }
+
+    public func endDurationKpi(tag: String) {
+        guard let kpi = currentDurationKpis[tag] else { return }
+        let updatedKpi = Stats.APDurationKpi(tag: kpi.tag, context: kpi.context, sessionID: kpi.sessionID, start: kpi.start, end: Date())
+        saveDurationKpi(updatedKpi)
+        currentDurationKpis.removeValue(forKey: tag)
+    }
+
+    public func endAllDurationKpis() {
+        for kpi in currentDurationKpis.values {
+            let updatedKpi = Stats.APDurationKpi(tag: kpi.tag, context: kpi.context, sessionID: kpi.sessionID, start: kpi.start, end: Date())
+            saveDurationKpi(updatedKpi)
+        }
+        currentDurationKpis.removeAll()
+    }
+
+    private func saveDurationKpi(_ kpi: Stats.APDurationKpi) {
+        var kpis = getSavedDurationKpis()
+        kpis.append(kpi)
+        do {
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .secondsSince1970
+            let data = try encoder.encode(kpis)
+            UserDefaults.standard.set(data, forKey: Keys.durationKpis)
+        } catch {
+            print("Error encoding APDurationKpi: \(error)")
+        }
+    }
+
+    private func getSavedDurationKpis() -> [Stats.APDurationKpi] {
+        guard let data = UserDefaults.standard.data(forKey: Keys.durationKpis) else {
+            return []
+        }
+        do {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            return try decoder.decode([Stats.APDurationKpi].self, from: data)
+        } catch {
+            print("Error decoding APDurationKpi: \(error)")
+            return []
+        }
+    }
+    
     // MARK: - Logs Events
 
     public func logEvent(_ tag: String, context: Stats.Context? = nil) {
@@ -131,11 +182,13 @@ public class StatsManager {
             let sessions: [Session]?
             let kpis: [Stats.KPI]?
             let requests: [Stats.RequestInfo]?
+            let durationKpis: [Stats.APDurationKpi]?
 
             if pushNotificationOnly {
                 sessions = nil
                 kpis = nil
                 requests = nil
+                durationKpis = nil
             } else {
                 sessions = try? self.storedObject(forKey: Keys.sessions, type: [Session].self)
                 defaults.removeObject(forKey: Keys.sessions)
@@ -145,12 +198,15 @@ public class StatsManager {
 
                 requests = try? self.storedObject(forKey: Keys.requests, type: [Stats.RequestInfo].self)
                 defaults.removeObject(forKey: Keys.requests)
+                
+                durationKpis = try? self.storedObject(forKey: Keys.durationKpis, type: [Stats.APDurationKpi].self)
+                defaults.removeObject(forKey: Keys.durationKpis)
             }
 
             let pushNotifications = try? self.storedObject(forKey: Keys.pushNotifications, type: [Stats.PushNotificationEvent].self)
             defaults.removeObject(forKey: Keys.pushNotifications)
 
-            stats = Stats(sessions: sessions, kpis: kpis, lastRequests: requests, pushNotifications: pushNotifications)
+            stats = Stats(sessions: sessions, kpis: kpis, lastRequests: requests, pushNotifications: pushNotifications, durations: durationKpis)
         }
 
         guard !stats.isEmpty else {
@@ -191,6 +247,9 @@ public class StatsManager {
             if let pushNotifications = stats.pushNotifications {
                 try append(elements: pushNotifications, toArrayForKey: Keys.pushNotifications)
             }
+            if let durations = stats.durations {
+                try append(element: durations, toArrayForKey: Keys.durationKpis)
+            }
         }
     }
 
@@ -198,7 +257,8 @@ public class StatsManager {
         [
             Keys.sessions,
             Keys.kpis,
-            Keys.requests
+            Keys.requests,
+            Keys.durationKpis
         ].forEach { defaults.removeObject(forKey: $0) }
     }
 
@@ -228,6 +288,7 @@ public class StatsManager {
 extension StatsManager: ApplicationSessionManagerDelegate {
     
     func applicationSessionManager(_ applicationSessionManager: ApplicationSessionManager, didCloseSession session: Session) {
+        endAllDurationKpis()
         addSession(session)
         sendStatsIfNeeded()
     }
@@ -239,6 +300,7 @@ extension StatsManager {
     enum Keys {
         static let sessions = "AP_STATS_SESSIONS"
         static let kpis = "AP_STATS_KPIS"
+        static let durationKpis = "AP_DURATION_KPIS"
         static let requests = "AP_STATS_REQUESTS"
         static let pushNotifications = "AP_STATS_PUSHS"
     }

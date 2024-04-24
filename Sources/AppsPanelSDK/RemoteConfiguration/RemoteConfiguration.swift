@@ -30,6 +30,7 @@ public struct RemoteConfiguration: Decodable {
     public let interstitialConfiguration: InterstitialConfiguration?
     public let ratingConfiguration: RatingConfiguration?
     public let feedbackConfiguration: FeedbackConfiguration?
+    public let versionConfiguration: VersionConfiguration?
 
     public internal(set) var applicationParameters: [String: Any]? = nil
 
@@ -51,6 +52,7 @@ public struct RemoteConfiguration: Decodable {
         case textManager
         case rating
         case feedback
+        case version
     }
 
     public init(from decoder: Decoder) throws {
@@ -99,6 +101,13 @@ public struct RemoteConfiguration: Decodable {
         } catch {
             feedbackConfiguration = nil
             print("[Remote Configuration] Feedback configuration is missing or invalid.")
+        }
+        
+        do {
+            versionConfiguration = try componentsContainer.decode(VersionConfiguration.self, forKey: .version)
+        } catch {
+            versionConfiguration = nil
+            print("[Remote Configuration] Version configuration is missing or invalid.")
         }
     }
 
@@ -226,6 +235,16 @@ extension RemoteConfiguration {
         
         enum CodingKeys: String, CodingKey {
             case isEnabled = "active"
+        }
+    }
+    
+    public struct VersionConfiguration: Enableable, Delayable, Codable {
+        public let isEnabled: Bool
+        public let delay: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case isEnabled = "active"
+            case delay
         }
     }
 }

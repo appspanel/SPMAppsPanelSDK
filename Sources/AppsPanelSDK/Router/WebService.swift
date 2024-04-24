@@ -20,6 +20,7 @@ enum WebService {
     case postRatings
     case getFeedbackConfiguration
     case postFeedback
+    case version
 }
 
 extension WebService: Endpoint {
@@ -41,6 +42,8 @@ extension WebService: Endpoint {
             return "sdk/rating"
         case .getFeedbackConfiguration, .postFeedback:
             return "sdk/feedback"
+        case .version:
+            return "sdk/version"
         }
     }
 
@@ -66,6 +69,8 @@ extension WebService: Endpoint {
             return .get
         case .postFeedback:
             return .post
+        case .version:
+            return .get
         }
     }
 

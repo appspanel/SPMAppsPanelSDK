@@ -11,7 +11,7 @@ import Foundation
 public class Logger {
     
     private let ddLogger: DatadogLogger
-        
+    
     public init() {
         ddLogger = DatadogLogger()
         ddLogger.deviceIdentifier = AppsPanel.shared.deviceIdentifier

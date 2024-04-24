@@ -1,4 +1,4 @@
-// Generated using Sourcery 2.0.2 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 2.2.2 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 //
 //  SDKVersion.stencil
@@ -11,6 +11,6 @@ import Foundation
 
 extension AppsPanel {
     var version: String {
-        return "5.4.0"
+        return "5.5.0"
     }
 }
