@@ -11,6 +11,6 @@ import Foundation
 
 extension AppsPanel {
     var version: String {
-        return "5.5.0"
+        return "5.5.2"
     }
 }

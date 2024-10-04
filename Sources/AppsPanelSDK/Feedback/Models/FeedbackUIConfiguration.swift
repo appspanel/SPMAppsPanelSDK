@@ -43,6 +43,8 @@ struct FeedbackUIConfiguration: Decodable {
 }
 
 struct FeedbackCategory: Identifiable, Decodable {
+    typealias ID = Int
+    
     let id: Int
     let name: String
 }

@@ -8,6 +8,8 @@
 import Foundation
 
 struct RatingCriterion: Decodable, Identifiable, Equatable, Hashable {
+    typealias ID = Int
+    
     var id: Int
     var name: String
 }
