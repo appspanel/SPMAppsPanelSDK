@@ -1,0 +1,6 @@
+framework module AppsPanelSDKExtension {
+  umbrella header "AppsPanelSDKExtension.h"
+  export *
+
+  module * { export * }
+}

@@ -11,9 +11,9 @@ import UIKit
 
 extension Stats {
 
-    struct PushNotificationEvent: Codable {
+    public struct PushNotificationEvent: Codable {
 
-        enum Action: String, Codable {
+        public enum Action: String, Codable {
             case received = "AP_PUSH_RECEIVED"
             case clicked = "AP_PUSH_CLICKED"
 

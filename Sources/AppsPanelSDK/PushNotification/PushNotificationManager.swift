@@ -177,8 +177,11 @@ public class PushNotificationManager {
         if show, let completionHandler = completionHandler {
             completionHandler([.alert, .sound])
         }
-
-        sendStatistic(id: userNotification.id, applicationState: state)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if (state == UIApplication.State.inactive) {
+                self.sendStatistic(id: userNotification.id, applicationState: state)
+            }
+        }
     }
 
     // MARK: Statistics

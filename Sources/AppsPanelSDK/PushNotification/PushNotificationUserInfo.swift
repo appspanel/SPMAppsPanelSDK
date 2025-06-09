@@ -30,7 +30,7 @@ public struct PushNotificationUserInfo: Codable {
     let data: [String: AnyCodable]?
     let image: URL?
     let urlRedirect: String?
-    let id: Int
+    public let id: Int
     let picture: URL?
     
     public init(from request: UNNotificationRequest) throws {

@@ -13,6 +13,7 @@ public struct Security {
     public internal(set) var options: Options = .jsonWebToken
     public internal(set) var usesUserToken: Bool = false
     public internal(set) var secureData: Data?
+    public internal(set) var sendJWTAuthorization: Bool = true
 
 }
 

@@ -1459,6 +1459,75 @@
             "funcSelfKind": "NonMutating"
           },
           {
+            "kind": "Function",
+            "name": "registerAPIConfiguration",
+            "printedName": "registerAPIConfiguration(named:config:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "APIConfig",
+                "printedName": "AppsPanelSDK.APIConfig",
+                "usr": "s:12AppsPanelSDK9APIConfigV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12AppsPanelSDK0aB0C24registerAPIConfiguration5named6configySS_AA9APIConfigVtF",
+            "mangledName": "$s12AppsPanelSDK0aB0C24registerAPIConfiguration5named6configySS_AA9APIConfigVtF",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getAPIConfiguration",
+            "printedName": "getAPIConfiguration(named:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "AppsPanelSDK.APIConfig?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "APIConfig",
+                    "printedName": "AppsPanelSDK.APIConfig",
+                    "usr": "s:12AppsPanelSDK9APIConfigV"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12AppsPanelSDK0aB0C19getAPIConfiguration5namedAA9APIConfigVSgSS_tF",
+            "mangledName": "$s12AppsPanelSDK0aB0C19getAPIConfiguration5namedAA9APIConfigVSgSS_tF",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
             "kind": "TypeDecl",
             "name": "Configuration",
             "printedName": "Configuration",
@@ -7074,6 +7143,51 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "sendJWTAuthorization",
+            "printedName": "sendJWTAuthorization",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12AppsPanelSDK8SecurityV20sendJWTAuthorizationSbvp",
+            "mangledName": "$s12AppsPanelSDK8SecurityV20sendJWTAuthorizationSbvp",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "SetterAccess",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK8SecurityV20sendJWTAuthorizationSbvg",
+                "mangledName": "$s12AppsPanelSDK8SecurityV20sendJWTAuthorizationSbvg",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
             "kind": "TypeDecl",
             "name": "Options",
             "printedName": "Options",
@@ -7814,6 +7928,50 @@
                 "printedName": "Encodable",
                 "usr": "s:SE",
                 "mangledName": "$sSE"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "id",
+            "printedName": "id",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12AppsPanelSDK24PushNotificationUserInfoV2idSivp",
+            "mangledName": "$s12AppsPanelSDK24PushNotificationUserInfoV2idSivp",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK24PushNotificationUserInfoV2idSivg",
+                "mangledName": "$s12AppsPanelSDK24PushNotificationUserInfoV2idSivg",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "get"
               }
             ]
           },
@@ -10094,6 +10252,116 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "configName",
+            "printedName": "configName",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12AppsPanelSDK11DataRequestC10configNameSSSgvp",
+            "mangledName": "$s12AppsPanelSDK11DataRequestC10configNameSSSgvp",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK11DataRequestC10configNameSSSgvg",
+                "mangledName": "$s12AppsPanelSDK11DataRequestC10configNameSSSgvg",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK11DataRequestC10configNameSSSgvs",
+                "mangledName": "$s12AppsPanelSDK11DataRequestC10configNameSSSgvs",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK11DataRequestC10configNameSSSgvM",
+                "mangledName": "$s12AppsPanelSDK11DataRequestC10configNameSSSgvM",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
             "kind": "Function",
             "name": "setBody",
             "printedName": "setBody(_:jsonEncoder:)",
@@ -10667,6 +10935,28 @@
             "moduleName": "AppsPanelSDK",
             "genericSig": "<τ_0_0 where τ_0_0 : Swift.Decodable>",
             "sugared_genericSig": "<T where T : Swift.Decodable>",
+            "declAttributes": [
+              "AccessControl",
+              "DiscardableResult"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "disableJWTAuthorization",
+            "printedName": "disableJWTAuthorization()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "DataRequest",
+                "printedName": "AppsPanelSDK.DataRequest",
+                "usr": "s:12AppsPanelSDK11DataRequestC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12AppsPanelSDK11DataRequestC23disableJWTAuthorizationACyF",
+            "mangledName": "$s12AppsPanelSDK11DataRequestC23disableJWTAuthorizationACyF",
+            "moduleName": "AppsPanelSDK",
             "declAttributes": [
               "AccessControl",
               "DiscardableResult"
@@ -16751,6 +17041,329 @@
             "implicit": true,
             "throwing": true,
             "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "PushNotificationEvent",
+            "printedName": "PushNotificationEvent",
+            "children": [
+              {
+                "kind": "TypeDecl",
+                "name": "Action",
+                "printedName": "Action",
+                "children": [
+                  {
+                    "kind": "Var",
+                    "name": "received",
+                    "printedName": "received",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(AppsPanelSDK.Stats.PushNotificationEvent.Action.Type) -> AppsPanelSDK.Stats.PushNotificationEvent.Action",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Action",
+                            "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action",
+                            "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Metatype",
+                            "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action.Type",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "Action",
+                                "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action",
+                                "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "declKind": "EnumElement",
+                    "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8receivedyA2GmF",
+                    "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8receivedyA2GmF",
+                    "moduleName": "AppsPanelSDK"
+                  },
+                  {
+                    "kind": "Var",
+                    "name": "clicked",
+                    "printedName": "clicked",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(AppsPanelSDK.Stats.PushNotificationEvent.Action.Type) -> AppsPanelSDK.Stats.PushNotificationEvent.Action",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Action",
+                            "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action",
+                            "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Metatype",
+                            "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action.Type",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "Action",
+                                "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action",
+                                "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "declKind": "EnumElement",
+                    "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO7clickedyA2GmF",
+                    "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO7clickedyA2GmF",
+                    "moduleName": "AppsPanelSDK"
+                  },
+                  {
+                    "kind": "Constructor",
+                    "name": "init",
+                    "printedName": "init(rawValue:)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Action",
+                            "printedName": "AppsPanelSDK.Stats.PushNotificationEvent.Action",
+                            "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "declKind": "Constructor",
+                    "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8rawValueAGSgSS_tcfc",
+                    "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8rawValueAGSgSS_tcfc",
+                    "moduleName": "AppsPanelSDK",
+                    "implicit": true,
+                    "init_kind": "Designated"
+                  },
+                  {
+                    "kind": "Var",
+                    "name": "rawValue",
+                    "printedName": "rawValue",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "declKind": "Var",
+                    "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8rawValueSSvp",
+                    "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8rawValueSSvp",
+                    "moduleName": "AppsPanelSDK",
+                    "implicit": true,
+                    "accessors": [
+                      {
+                        "kind": "Accessor",
+                        "name": "Get",
+                        "printedName": "Get()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ],
+                        "declKind": "Accessor",
+                        "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8rawValueSSvg",
+                        "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO8rawValueSSvg",
+                        "moduleName": "AppsPanelSDK",
+                        "implicit": true,
+                        "accessorKind": "get"
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "Enum",
+                "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO",
+                "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV6ActionO",
+                "moduleName": "AppsPanelSDK",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "enumRawTypeName": "String",
+                "conformances": [
+                  {
+                    "kind": "Conformance",
+                    "name": "Copyable",
+                    "printedName": "Copyable",
+                    "usr": "s:s8CopyableP",
+                    "mangledName": "$ss8CopyableP"
+                  },
+                  {
+                    "kind": "Conformance",
+                    "name": "Escapable",
+                    "printedName": "Escapable",
+                    "usr": "s:s9EscapableP",
+                    "mangledName": "$ss9EscapableP"
+                  },
+                  {
+                    "kind": "Conformance",
+                    "name": "Equatable",
+                    "printedName": "Equatable",
+                    "usr": "s:SQ",
+                    "mangledName": "$sSQ"
+                  },
+                  {
+                    "kind": "Conformance",
+                    "name": "Hashable",
+                    "printedName": "Hashable",
+                    "usr": "s:SH",
+                    "mangledName": "$sSH"
+                  },
+                  {
+                    "kind": "Conformance",
+                    "name": "RawRepresentable",
+                    "printedName": "RawRepresentable",
+                    "children": [
+                      {
+                        "kind": "TypeWitness",
+                        "name": "RawValue",
+                        "printedName": "RawValue",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:SY",
+                    "mangledName": "$sSY"
+                  },
+                  {
+                    "kind": "Conformance",
+                    "name": "Decodable",
+                    "printedName": "Decodable",
+                    "usr": "s:Se",
+                    "mangledName": "$sSe"
+                  },
+                  {
+                    "kind": "Conformance",
+                    "name": "Encodable",
+                    "printedName": "Encodable",
+                    "usr": "s:SE",
+                    "mangledName": "$sSE"
+                  }
+                ]
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(from:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "PushNotificationEvent",
+                    "printedName": "AppsPanelSDK.Stats.PushNotificationEvent",
+                    "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Decoder",
+                    "printedName": "any Swift.Decoder",
+                    "usr": "s:s7DecoderP"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV4fromAEs7Decoder_p_tKcfc",
+                "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV4fromAEs7Decoder_p_tKcfc",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "throwing": true,
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Function",
+                "name": "encode",
+                "printedName": "encode(to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Encoder",
+                    "printedName": "any Swift.Encoder",
+                    "usr": "s:s7EncoderP"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV6encode2toys7Encoder_p_tKF",
+                "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV6encode2toys7Encoder_p_tKF",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              }
+            ],
+            "declKind": "Struct",
+            "usr": "s:12AppsPanelSDK5StatsV21PushNotificationEventV",
+            "mangledName": "$s12AppsPanelSDK5StatsV21PushNotificationEventV",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Decodable",
+                "printedName": "Decodable",
+                "usr": "s:Se",
+                "mangledName": "$sSe"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Encodable",
+                "printedName": "Encodable",
+                "usr": "s:SE",
+                "mangledName": "$sSE"
+              }
+            ]
           }
         ],
         "declKind": "Struct",
@@ -17208,6 +17821,109 @@
                   "Final"
                 ],
                 "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any AppsPanelSDK.TextManagerDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvp",
+            "mangledName": "$s12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvp",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any AppsPanelSDK.TextManagerDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "TextManagerDelegate",
+                        "printedName": "any AppsPanelSDK.TextManagerDelegate",
+                        "usr": "s:12AppsPanelSDK19TextManagerDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvg",
+                "mangledName": "$s12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvg",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any AppsPanelSDK.TextManagerDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "TextManagerDelegate",
+                        "printedName": "any AppsPanelSDK.TextManagerDelegate",
+                        "usr": "s:12AppsPanelSDK19TextManagerDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvs",
+                "mangledName": "$s12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvs",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvM",
+                "mangledName": "$s12AppsPanelSDK11TextManagerC8delegateAA0dE8Delegate_pSgvM",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
               }
             ]
           },
@@ -18025,6 +18741,59 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "TextManagerDelegate",
+        "printedName": "TextManagerDelegate",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "textManagerDidUpdateTexts",
+            "printedName": "textManagerDidUpdateTexts()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12AppsPanelSDK19TextManagerDelegateP04textE14DidUpdateTextsyyF",
+            "mangledName": "$s12AppsPanelSDK19TextManagerDelegateP04textE14DidUpdateTextsyyF",
+            "moduleName": "AppsPanelSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppsPanelSDK.TextManagerDelegate>",
+            "sugared_genericSig": "<Self where Self : AppsPanelSDK.TextManagerDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:12AppsPanelSDK19TextManagerDelegateP",
+        "mangledName": "$s12AppsPanelSDK19TextManagerDelegateP",
+        "moduleName": "AppsPanelSDK",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
         "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
@@ -18509,6 +19278,208 @@
         "printedName": "UIKit",
         "declKind": "Import",
         "moduleName": "AppsPanelSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "APIConfig",
+        "printedName": "APIConfig",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "appName",
+            "printedName": "appName",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12AppsPanelSDK9APIConfigV7appNameSSvp",
+            "mangledName": "$s12AppsPanelSDK9APIConfigV7appNameSSvp",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK9APIConfigV7appNameSSvg",
+                "mangledName": "$s12AppsPanelSDK9APIConfigV7appNameSSvg",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "appKey",
+            "printedName": "appKey",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12AppsPanelSDK9APIConfigV6appKeySSvp",
+            "mangledName": "$s12AppsPanelSDK9APIConfigV6appKeySSvp",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK9APIConfigV6appKeySSvg",
+                "mangledName": "$s12AppsPanelSDK9APIConfigV6appKeySSvg",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "appSecret",
+            "printedName": "appSecret",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12AppsPanelSDK9APIConfigV9appSecretSSvp",
+            "mangledName": "$s12AppsPanelSDK9APIConfigV9appSecretSSvp",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12AppsPanelSDK9APIConfigV9appSecretSSvg",
+                "mangledName": "$s12AppsPanelSDK9APIConfigV9appSecretSSvg",
+                "moduleName": "AppsPanelSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(appName:appKey:appSecret:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "APIConfig",
+                "printedName": "AppsPanelSDK.APIConfig",
+                "usr": "s:12AppsPanelSDK9APIConfigV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:12AppsPanelSDK9APIConfigV7appName0E3Key0E6SecretACSS_S2Stcfc",
+            "mangledName": "$s12AppsPanelSDK9APIConfigV7appName0E3Key0E6SecretACSS_S2Stcfc",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:12AppsPanelSDK9APIConfigV",
+        "mangledName": "$s12AppsPanelSDK9APIConfigV",
+        "moduleName": "AppsPanelSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -20076,6 +21047,121 @@
               "DiscardableResult"
             ],
             "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "manager",
+            "printedName": "manager(forConfigNamed:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "AppsPanelSDK.RequestManager?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "RequestManager",
+                    "printedName": "AppsPanelSDK.RequestManager",
+                    "usr": "s:12AppsPanelSDK14RequestManagerC"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12AppsPanelSDK14RequestManagerC7manager14forConfigNamedACSgSS_tFZ",
+            "mangledName": "$s12AppsPanelSDK14RequestManagerC7manager14forConfigNamedACSgSS_tFZ",
+            "moduleName": "AppsPanelSDK",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "requestWithConfig",
+            "printedName": "requestWithConfig(_:method:parameters:configName:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "AppsPanelSDK.DataRequest?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DataRequest",
+                    "printedName": "AppsPanelSDK.DataRequest",
+                    "usr": "s:12AppsPanelSDK11DataRequestC"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "HTTPMethod",
+                "printedName": "AppsPanelSDK.HTTPMethod",
+                "usr": "s:12AppsPanelSDK10HTTPMethodO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Any]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12AppsPanelSDK14RequestManagerC17requestWithConfig_6method10parameters10configNameAA04DataD0CSgSS_AA10HTTPMethodOSDySSypGSgSStF",
+            "mangledName": "$s12AppsPanelSDK14RequestManagerC17requestWithConfig_6method10parameters10configNameAA04DataD0CSgSS_AA10HTTPMethodOSDySSypGSgSStF",
+            "moduleName": "AppsPanelSDK",
+            "declAttributes": [
+              "AccessControl",
+              "DiscardableResult"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Class",
@@ -20542,15 +21628,22 @@
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/AppsPanel.swift",
+      "kind": "Dictionary",
+      "offset": 1413,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/AppsPanel.swift",
       "kind": "BooleanLiteral",
-      "offset": 1416,
+      "offset": 1482,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/AppsPanel.swift",
       "kind": "BooleanLiteral",
-      "offset": 1501,
+      "offset": 1567,
       "length": 5,
       "value": "false"
     },
@@ -20564,14 +21657,14 @@
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/PushNotificationInfo.swift",
       "kind": "StringLiteral",
-      "offset": 321,
+      "offset": 335,
       "length": 18,
       "value": "\"AP_PUSH_RECEIVED\""
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/PushNotificationInfo.swift",
       "kind": "StringLiteral",
-      "offset": 367,
+      "offset": 381,
       "length": 17,
       "value": "\"AP_PUSH_CLICKED\""
     },
@@ -21046,38 +22139,31 @@
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
+      "kind": "BooleanLiteral",
+      "offset": 415,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
       "kind": "Array",
-      "offset": 544,
+      "offset": 607,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
       "kind": "IntegerLiteral",
-      "offset": 607,
+      "offset": 670,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
       "kind": "IntegerLiteral",
-      "offset": 612,
+      "offset": 675,
       "length": 1,
       "value": "0"
-    },
-    {
-      "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
-      "kind": "IntegerLiteral",
-      "offset": 669,
-      "length": 1,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
-      "kind": "IntegerLiteral",
-      "offset": 674,
-      "length": 1,
-      "value": "1"
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
@@ -21090,6 +22176,20 @@
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
       "kind": "IntegerLiteral",
       "offset": 737,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
+      "kind": "IntegerLiteral",
+      "offset": 795,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Requests\/Security.swift",
+      "kind": "IntegerLiteral",
+      "offset": 800,
       "length": 1,
       "value": "2"
     },
@@ -21341,42 +22441,42 @@
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/StatsManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 6128,
+      "offset": 6592,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/StatsManager.swift",
       "kind": "StringLiteral",
-      "offset": 10376,
+      "offset": 10840,
       "length": 19,
       "value": "\"AP_STATS_SESSIONS\""
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/StatsManager.swift",
       "kind": "StringLiteral",
-      "offset": 10422,
+      "offset": 10886,
       "length": 15,
       "value": "\"AP_STATS_KPIS\""
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/StatsManager.swift",
       "kind": "StringLiteral",
-      "offset": 10472,
+      "offset": 10936,
       "length": 18,
       "value": "\"AP_DURATION_KPIS\""
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/StatsManager.swift",
       "kind": "StringLiteral",
-      "offset": 10521,
+      "offset": 10985,
       "length": 19,
       "value": "\"AP_STATS_REQUESTS\""
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/Stats\/StatsManager.swift",
       "kind": "StringLiteral",
-      "offset": 10580,
+      "offset": 11044,
       "length": 16,
       "value": "\"AP_STATS_PUSHS\""
     },
@@ -21404,21 +22504,21 @@
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/TextManager\/TextManager.swift",
       "kind": "Dictionary",
-      "offset": 1700,
+      "offset": 1756,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/TextManager\/TextManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 2928,
+      "offset": 2984,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/theocauffour\/Documents\/Projects\/sdkmobile-core-ios\/AppsPanelSDK\/TextManager\/TextManager.swift",
       "kind": "StringLiteral",
-      "offset": 4590,
+      "offset": 4646,
       "length": 15,
       "value": "\"##([A-Z_]+)##\""
     },

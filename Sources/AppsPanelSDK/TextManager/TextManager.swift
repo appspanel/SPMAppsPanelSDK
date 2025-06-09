@@ -12,6 +12,8 @@ public class TextManager {
 
     public static let shared = TextManager()
     
+    public weak var delegate: TextManagerDelegate?
+    
     private var configuration: RemoteConfiguration.TextManagerConfiguration?
     
     private var storage = TextManagerStorage.shared
@@ -302,6 +304,7 @@ public class TextManager {
         // Write to file
         try json.write(to: url, options: .atomic)
         print("[Text Manager] Texts saved")
+        delegate?.textManagerDidUpdateTexts()
     }
 
     // MARK: - Clear cache
@@ -334,4 +337,8 @@ public extension TextManager {
         case bundleFileMissing
     }
 
+}
+
+public protocol TextManagerDelegate: AnyObject {
+    func textManagerDidUpdateTexts()
 }

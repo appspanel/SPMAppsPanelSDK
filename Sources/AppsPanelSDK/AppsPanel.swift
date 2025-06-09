@@ -55,6 +55,8 @@ public class AppsPanel {
         return _configuration != nil
     }
     
+    private var apiConfigurations: [String: APIConfig] = [:]
+    
     // MARK: -
     
     private var didStartSession: Bool = false
@@ -222,6 +224,14 @@ extension AppsPanel {
 
     func notConfiguredFailure() -> Never {
         preconditionFailure("You have to configure the Apps Panel SDK before doing anything with it.")
+    }
+    
+    public func registerAPIConfiguration(named name: String, config: APIConfig) {
+        apiConfigurations[name] = config
+    }
+
+    public func getAPIConfiguration(named name: String) -> APIConfig? {
+        return apiConfigurations[name]
     }
 
 }

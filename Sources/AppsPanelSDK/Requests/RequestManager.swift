@@ -223,3 +223,65 @@ extension RequestManager {
     }
 
 }
+
+extension RequestManager {
+    public static func manager(forConfigNamed configName: String) -> RequestManager? {
+        guard let config = AppsPanel.shared.getAPIConfiguration(named: configName) else {
+            return nil
+        }
+        
+        let baseURLString = "https://\(config.appName).ap-api.com"
+        guard let baseURL = URL(string: baseURLString) else {
+            return nil
+        }
+            
+        let manager = RequestManager(baseURL: baseURL)
+        return manager
+    }
+    
+    @discardableResult
+    public func requestWithConfig(_ path: String,
+                               method: HTTPMethod,
+                               parameters: Parameters? = nil,
+                               configName: String) -> DataRequest?
+    {
+        guard let config = AppsPanel.shared.getAPIConfiguration(named: configName) else {
+            return nil
+        }
+        
+        let useSDKBaseURL = path.hasPrefix("sdk/")
+        var finalPath = path
+        
+        let baseURLString: String
+        if useSDKBaseURL {
+            baseURLString = "https://\(config.appName).ap-sdk.com"
+            finalPath = String(path.dropFirst(4))
+        } else {
+            baseURLString = "https://\(config.appName).ap-api.com"
+        }
+        
+        guard let baseURLToUse = URL(string: baseURLString) else {
+            return nil
+        }
+        
+        do {
+            let url = baseURLToUse.appendingPathComponent(finalPath)
+            
+            var urlRequest = URLRequest(url: url)
+            urlRequest.httpMethod = method.rawValue
+            
+            if let parameters = parameters {
+                let urlEncoding = URLEncoding(destination: .queryString, arrayEncoding: .brackets, boolEncoding: .literal)
+                urlRequest = try urlEncoding.encode(urlRequest, with: parameters)
+            }
+            
+            let dataRequest = DataRequest(requestManager: self, request: urlRequest)
+            dataRequest.configName = configName
+            
+            return dataRequest
+        } catch {
+            print("Error creating request with config: \(error)")
+            return nil
+        }
+    }
+}

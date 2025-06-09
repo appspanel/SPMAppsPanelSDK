@@ -29,6 +29,8 @@ public class DataRequest {
     public var downloadProgress: DownloadProgressHandler?
 
     public var error: RequestError.Cause?
+    
+    public var configName: String?
 
     init(requestManager: RequestManager, request: URLRequest, error: RequestError.Cause? = nil) {
         self.requestManager = requestManager
@@ -240,10 +242,10 @@ public class DataRequest {
         urlRequest.allHTTPHeaderFields?.merge(headers) { current, _ in current }
     }
     
-    private func setDefaultHeaders() {
+    private func setDefaultHeaders(withAppKey appKey: String) {
         var defaultHeaders: [String: String] = [:]
 
-        defaultHeaders["X-AP-Key"] = AppsPanel.shared.configuration.appKey
+        defaultHeaders["X-AP-Key"] = appKey
         defaultHeaders["X-AP-RealTime"] = String(Int(Date().timeIntervalSince1970))
         defaultHeaders["X-AP-OS"] = "iOS"
         defaultHeaders["X-AP-DeviceUID"] = DeviceIdentifier.identifier()
@@ -271,7 +273,23 @@ public class DataRequest {
     // Modifies the URL request as it should be sent by setting the request's body and applying security with encryption and JWT.
     private func finalizeURLRequest() {
         setGlobalCustomHeaders()
-        setDefaultHeaders()
+        
+        let appName: String
+        let appKey: String
+        let privateKey: String
+        
+        if let configName = self.configName,
+           let config = AppsPanel.shared.getAPIConfiguration(named: configName) {
+            appName = config.appName
+            appKey = config.appKey
+            privateKey = config.appSecret
+        } else {
+            appName = AppsPanel.shared.configuration.appName
+            appKey = AppsPanel.shared.configuration.appKey
+            privateKey = AppsPanel.shared.configuration.privateKey
+        }
+        
+        setDefaultHeaders(withAppKey: appKey)
         
         // Timeout
         if let timeout = timeout {
@@ -279,8 +297,7 @@ public class DataRequest {
         } else if let defaultTimeout = requestManager.defaultTimeout {
             urlRequest.timeoutInterval = defaultTimeout
         }
-        
-        let sec = secret(forPrivateKey: AppsPanel.shared.configuration.privateKey)
+        let sec = secret(forPrivateKey: privateKey)
         let iv = randomString(length: 16)
 
         // Set body with encryption if wanted
@@ -311,7 +328,7 @@ public class DataRequest {
         }
 
         // JWT
-        if security.options.contains(.jsonWebToken) {
+        if security.options.contains(.jsonWebToken) && security.sendJWTAuthorization {
             let jwt = JSONWebToken(appName: AppsPanel.shared.configuration.appName,
                                    appKey: AppsPanel.shared.configuration.appKey,
                                    secret: sec,
@@ -337,6 +354,12 @@ public class DataRequest {
         }
     }
 
+    @discardableResult
+    public func disableJWTAuthorization() -> DataRequest {
+        security.sendJWTAuthorization = false
+        return self
+    }
+    
     // MARK: - Decryption
 
     private func decrypt(data: Data, httpResponse: HTTPURLResponse) throws -> Data  {

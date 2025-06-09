@@ -110,10 +110,14 @@ extension RequestError.Cause {
                 print("Failure Reason: \(reason)")
                 self = RequestError.Cause.unknown
             default:
-                self = RequestError.Cause.unknown
-                print("Unknown error: \(error)")
+                if let error = error.underlyingError as? URLError {
+                    self = RequestError.Cause.network(error: error)
+                    print("URLError occurred: \(error)")
+                } else {
+                    self = RequestError.Cause.unknown
+                    print("Unknown error: \(error)")
+                }
             }
-
             print("Underlying error: \(String(describing: error.underlyingError))")
         } else if let error = error as? URLError {
             self = RequestError.Cause.network(error: error)

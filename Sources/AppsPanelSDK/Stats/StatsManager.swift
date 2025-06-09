@@ -54,7 +54,12 @@ public class StatsManager {
     private var currentDurationKpis: [String: Stats.APDurationKpi] = [:]
 
     public func startDurationKpi(tag: String, context: Stats.Context? = nil) {
-        let kpi = Stats.APDurationKpi(tag: tag, context: context, sessionID: ApplicationSessionManager.shared.session.id, start: Date(), end: nil)
+        let sessionID = ApplicationSessionManager.shared.session.id
+        guard !sessionID.isEmpty else {
+            print("Attempting to create duration KPI with empty sessionID")
+            return
+        }
+        let kpi = Stats.APDurationKpi(tag: tag, context: context, sessionID: sessionID, start: Date(), end: nil)
         currentDurationKpis[tag] = kpi
     }
 
@@ -104,12 +109,20 @@ public class StatsManager {
 
     public func logEvent(_ tag: String, context: Stats.Context? = nil) {
         let session = ApplicationSessionManager.shared.session
+        guard !session.id.isEmpty else {
+            print("Attempting to create event KPI with empty sessionID")
+            return
+        }
         let kpi = Stats.KPI(kind: .event, tag: tag, context: context, sessionID: session.id)
         addKPI(kpi)
     }
 
     public func logView(_ tag: String, context: Stats.Context? = nil) {
         let session = ApplicationSessionManager.shared.session
+        guard !session.id.isEmpty else {
+            print("Attempting to create view KPI with empty sessionID")
+            return
+        }
         let kpi = Stats.KPI(kind: .view, tag: tag, context: context, sessionID: session.id)
         addKPI(kpi)
     }
