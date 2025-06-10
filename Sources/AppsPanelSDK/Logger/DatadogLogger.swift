@@ -5,6 +5,7 @@
 //  Created by Arnaud Olivier on 25/01/2023.
 //  Copyright © 2023 Apps Panel. All rights reserved.
 //
+#if !EXTENSION
 import DatadogCore
 import DatadogLogs
 import Foundation
@@ -66,3 +67,22 @@ class DatadogLogger {
         logger.critical(message, attributes: attributes)
     }
 }
+
+#endif
+
+#if EXTENSION
+class DatadogLogger {
+    var deviceIdentifier: String?
+
+    typealias Attributes = [String: Encodable]
+
+    static func configure(clientToken: String, environment: String) {}
+
+    func debug(_ message: String, attributes: Attributes? = nil) {}
+    func info(_ message: String, attributes: Attributes? = nil) {}
+    func notice(_ message: String, attributes: Attributes? = nil) {}
+    func warn(_ message: String, attributes: Attributes? = nil) {}
+    func error(_ message: String, attributes: Attributes? = nil) {}
+    func critical(_ message: String, attributes: Attributes? = nil) {}
+}
+#endif
