@@ -37,7 +37,11 @@ let package = Package(
                 dependencies: [
                     "AppsPanelSDK",
                 ],
-                path: "Sources/AppsPanelSDKExtension"
+                path: "Sources/AppsPanelSDKExtension",
+                exclude: [
+                    "../AppsPanelSDK/Logger/DatadogLogger.swift",
+                    "../AppsPanelSDK/Logger/Logger.swift"
+                ]
             ),
         .testTarget(
             name: "AppsPanelSDKv5PackageTests",
