@@ -33,15 +33,23 @@ let package = Package(
                 resources: [.process("Resources")]
             ),
             .target(
-                name: "AppsPanelSDKExtension",
+                name: "AppsPanelSDKCore",
                 dependencies: [
-                    "AppsPanelSDK",
+                    .product(name: "Alamofire", package: "Alamofire"),
+                    .product(name: "KeychainAccess", package: "KeychainAccess"),
+                    .product(name: "SwiftJWT", package: "Swift-JWT"),
                 ],
-                path: "Sources/AppsPanelSDKExtension",
+                path: "Sources/AppsPanelSDK",
                 exclude: [
-                    "../AppsPanelSDK/Logger/DatadogLogger.swift",
-                    "../AppsPanelSDK/Logger/Logger.swift"
-                ]
+                    "Logger/DatadogLogger.swift",
+                    "Logger/Logger.swift"
+                ],
+                resources: [.process("Resources")]
+            ),
+            .target(
+                name: "AppsPanelSDKExtension",
+                    dependencies: ["AppsPanelSDKCore"],
+                path: "Sources/AppsPanelSDKExtension"
             ),
         .testTarget(
             name: "AppsPanelSDKv5PackageTests",
