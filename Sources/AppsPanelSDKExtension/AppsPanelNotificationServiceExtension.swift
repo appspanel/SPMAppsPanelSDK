@@ -7,7 +7,7 @@
 //
 
 import UserNotifications
-import AppsPanelSDK
+import AppsPanelSDKCore
 
 open class AppsPanelNotificationServiceExtension: UNNotificationServiceExtension {
     var contentHandler: ((UNNotificationContent) -> Void)?
